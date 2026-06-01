@@ -13,6 +13,11 @@ public class ModPlugin extends BaseModPlugin {
 
         FancyPhaseGlow.Debug = Global.getSettings().getBoolean("fpg_debug");
 
+
+    }
+
+    public void onGameLoad(boolean newGame) {
+        Global.getSector().addTransientScript(new CustomBanel());
     }
 
 

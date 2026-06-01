@@ -1,3 +1,12 @@
 {
-    "fpg_debug": true
+    "fpg_debug": true,
+    "plugins": {
+        "refit_screen_thingamajig" : "DeCell.FPG.Plugins.CustomBanel"
+    },
+    "graphics":{
+        "fpg":{
+            "border1": "graphics/FPG/ui/Border.png",
+            "border2": "graphics/FPG/ui/Border2.png",
+        }
+    }
 }

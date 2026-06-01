@@ -24,8 +24,8 @@ public class ShaderUniformManager {
 
     // Cache for uniform locations
     private final Hashtable<String, Integer> uniformCache = new Hashtable<>();
-    private final FloatBuffer floatArrayBuffer = BufferUtils.createFloatBuffer(512); // 16kb
-    private final IntBuffer intArrayBuffer = BufferUtils.createIntBuffer(512); // 16kb
+    private static final FloatBuffer floatArrayBuffer = BufferUtils.createFloatBuffer(512); // 16kb
+    private static final IntBuffer intArrayBuffer = BufferUtils.createIntBuffer(512); // 16kb
 
     public ShaderUniformManager(int shaderProgramHandle) {
         this.programHandle = shaderProgramHandle;

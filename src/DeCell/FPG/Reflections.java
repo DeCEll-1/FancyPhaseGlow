@@ -164,4 +164,28 @@ public class Reflections {
         // Find and return the VarHandle
         return privateLookup.findVarHandle(targetClass, fieldName, fieldType);
     }
+
+
+    public static Object invokeMethod(String methodName, Object target) {
+        if (target == null || methodName == null || methodName.isEmpty()) {
+            throw new IllegalArgumentException("Target object and method name cannot be null or empty");
+        }
+
+        try {
+            Class<?> clazz = target.getClass();
+
+            // Get the Method object using getMethod (no parameters)
+            Object method = getMethodHandle.invoke(clazz, methodName, new Class<?>[0]);
+
+            // Make it accessible in case it's private/protected
+            setMethodAccessable.invoke(method, true);
+
+            // Invoke the method on the target
+            return invokeMethodHandle.invoke(method, target, new Object[0]);
+
+        } catch (Throwable t) {
+            throw new RuntimeException("Failed to invoke method '" + methodName +
+                    "' on " + target.getClass().getName(), t);
+        }
+    }
 }
