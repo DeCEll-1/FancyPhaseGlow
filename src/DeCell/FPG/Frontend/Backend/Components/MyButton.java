@@ -1,6 +1,6 @@
 package DeCell.FPG.Frontend.Backend.Components;
 
-import DeCell.FPG.Frontend.Backend.AUIElement;
+import DeCell.FPG.Frontend.Backend.UIElement;
 import com.fs.starfarer.api.ui.Alignment;
 import com.fs.starfarer.api.ui.ButtonAPI;
 import com.fs.starfarer.api.ui.CutStyle;
@@ -9,24 +9,27 @@ import com.fs.starfarer.api.util.Misc;
 import java.awt.*;
 import java.util.function.Consumer;
 
-public class MyButton extends AUIElement<MyButton, ButtonAPI> {
+public class MyButton extends UIElement<MyButton, ButtonAPI> {
     public MyButton(ButtonAPI underlying) {
         super(underlying);
     }
 
     public MyButton(String text, float width, float height, float pad, MyTooltip parent) {
-        super(parent.u.addButton(text, null, width, height, pad));
+        super(parent.addButton(text, null, width, height, pad));
+        parent.addElement(this);
     }
 
     public MyButton(String text, Color base, Color bg,
                     float width, float height, float pad, MyTooltip parent) {
-        super(parent.u.addButton(text, null, base, bg, width, height, pad));
+        super(parent.addButton(text, null, base, bg, width, height, pad));
+        parent.addElement(this);
     }
 
     public MyButton(String text, Color base, Color bg,
                     Alignment align, CutStyle style,
                     float width, float height, float pad, MyTooltip parent) {
-        super(parent.u.addButton(text, null, base, bg, align, style, width, height, pad));
+        super(parent.addButton(text, null, base, bg, align, style, width, height, pad));
+        parent.addElement(this);
     }
 
     public MyButton(String text, Alignment align, CutStyle style,

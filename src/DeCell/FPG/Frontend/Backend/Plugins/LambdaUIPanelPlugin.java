@@ -6,7 +6,7 @@ import com.fs.starfarer.api.ui.PositionAPI;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class LambdaUIPanelPlugin extends CPanelPlugin {
+public class LambdaUIPanelPlugin extends PanelPlugin {
 
     private Consumer<PositionAPI> onPositionChanged = null;
     private Consumer<Float> onRenderBelow = null;

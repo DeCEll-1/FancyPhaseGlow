@@ -1,0 +1,262 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://json-schema.hyperjump.io/schema",
+    "type": "object",
+    "properties": {
+        "Shaders": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "Title",
+                    "ID",
+                    "FragmentShaderPath"
+                ],
+                "properties": {
+                    "Title": {
+                        "type": "string",
+                        "description": "The name of the shader"
+                    },
+                    "ID": {
+                        "type": "string",
+                        "description": ""
+                    },
+                    "FragmentShaderPath": {
+                        "type": "string",
+                        "description": "The path to the .fragment shader file"
+                    },
+                    "VertexShaderPath": {
+                        "type": "string",
+                        "description": "The .vertex file that the shader will use, not necessary to input"
+                    },
+                    "Uniforms": {
+                        "type": "array",
+                        "description": "The uniform values that the fragment shader will have",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "Name": {
+                                    "type": "string",
+                                    "description": "the name of the uniform variable"
+                                },
+                                "Type": {
+                                    "type": "string",
+                                    "description": "The type of uniform",
+                                    "enum": [
+                                        "int",
+                                        "float",
+                                        "col3",
+                                        "vec3",
+                                        "col3[]",
+                                        "vec3[]",
+                                        "sampler2D"
+                                    ]
+                                },
+                                "Value": {
+                                    "description": "The value of the uniform",
+                                    "oneOf": [
+                                        {
+                                            "type": "string",
+                                            "description": "Value from the engine",
+                                            "enum": [
+                                                "time",
+                                                "flux",
+                                                "hull",
+                                                "phase_texture",
+                                                "texWidth", // the texture size in 0-1 range
+                                                // for any non 2^n sprite the game adds padding to make them 2^n
+                                                // this value is the multiplier that the game does to get the actual size of the sprite
+                                                // for example if a sprite is 96 pixels wide, the next 2^n is 128
+                                                // texWidth would be .75 in this example, as thats what you need to multiply
+                                                // 128 with to get 96
+                                                // this ratio is used primarily in getting the correct texels in the shaders
+                                                "texHeight" // same as above, just for height
+                                            ]
+                                        },
+                                        {
+                                            "type": "number"
+                                        },
+                                        {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "number"
+                                            }
+                                        },
+                                        {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "number"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "Modifyable": {
+                                    "type": "boolean",
+                                    "default": false
+                                }
+                            },
+                            "additionalProperties": false,
+                            "required": [
+                                "Name",
+                                "Type",
+                                "Value"
+                            ],
+                            "allOf": [
+                                { // col3
+                                    "if": {
+                                        "properties": {
+                                            "Type": { "const": "col3" }
+                                        }
+                                    },
+                                    "then": {
+                                        "properties": {
+                                            "Value": {
+                                                "type": "array",
+                                                "minItems": 3,
+                                                "maxItems": 3,
+                                                "items": {
+                                                    "type": "number",
+                                                    "minimum": 0,
+                                                    "maximum": 255
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                { // vec3
+                                    "if": {
+                                        "properties": {
+                                            "Type": { "const": "vec3" }
+                                        }
+                                    },
+                                    "then": {
+                                        "properties": {
+                                            "Value": {
+                                                "type": "array",
+                                                "minItems": 3,
+                                                "maxItems": 3
+                                            }
+                                        }
+                                    }
+                                },
+                                { // col3[] 
+                                    "if": {
+                                        "properties": {
+                                            "Type": { "const": "col3[]" }
+                                        }
+                                    },
+                                    "then": {
+                                        "properties": {
+                                            "Value": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "array",
+                                                    "minItems": 3,
+                                                    "maxItems": 3,
+                                                    "items": {
+                                                        "type": "number",
+                                                        "minimum": 0,
+                                                        "maximum": 255
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                { // vec3[]
+                                    "if": {
+                                        "properties": {
+                                            "Type": { "const": "vec3[]" }
+                                        }
+                                    },
+                                    "then": {
+                                        "properties": {
+                                            "Value": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "array",
+                                                    "minItems": 3,
+                                                    "maxItems": 3,
+                                                    "items": {
+                                                        "type": "number"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                { // Modifyable force set false for engine variables
+                                    "if": {
+                                        "properties": {
+                                            "Value": { "type": "string" }
+                                        }
+                                    },
+                                    "then": {
+                                        "properties": {
+                                            "Modifyable": {
+                                                "const": false,
+                                                "description": "Engine-sourced variables cannot be modified at runtime."
+                                            }
+                                        }
+                                    }
+                                },
+                                { // game engine float handler
+                                    "description": "Enforce strict pairing for float and engine inputs",
+                                    "anyOf": [
+                                        {
+                                            "description": "Engine string constants must be paired with float",
+                                            "properties": {
+                                                "Type": { "const": "float" },
+                                                "Value": { "enum": [ "time", "flux", "hull", "texWidth", "texHeight" ] }
+                                            }
+                                        },
+                                        {
+                                            "description": "Raw numeric values can be paired with float",
+                                            "properties": {
+                                                "Type": { "const": "float" },
+                                                "Value": { "type": "number" }
+                                            }
+                                        },
+                                        {
+                                            "description": "Engine string constant and type mismatch",
+                                            "properties": {
+                                                "Type": { "not": { "const": "float" } },
+                                                "Value": { "not": { "enum": [ "time", "flux", "hull", "texWidth", "texHeight" ] } }
+                                            }
+                                        }
+                                    ]
+                                },
+                                { // sampler2D and phase_texture handler
+                                    "description": "Enforce strict pairing for textures and engine inputs",
+                                    "anyOf": [
+                                        {
+                                            "description": "Both are sampler2D and phase_texture",
+                                            "properties": {
+                                                "Type": { "const": "sampler2D" },
+                                                "Value": { "const": "phase_texture" }
+                                            }
+                                        },
+                                        {
+                                            "description": "Neither are sampler2D or phase_texture",
+                                            "properties": {
+                                                "Type": { "not": { "const": "sampler2D" } },
+                                                "Value": { "not": { "enum": [ "phase_texture" ] } }
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "uniqueItems": true
+                    }
+                }
+            }
+        }
+    },
+    "required": [
+        "Shaders"
+    ]
+}

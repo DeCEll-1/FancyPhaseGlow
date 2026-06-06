@@ -1,9 +1,9 @@
 package DeCell.FPG.Frontend.Backend.Components;
 
-import DeCell.FPG.Frontend.Backend.AUIContainer;
-import DeCell.FPG.Frontend.Backend.AUIElement;
+import DeCell.FPG.Frontend.Backend.UIContainer;
+import DeCell.FPG.Frontend.Backend.UIElement;
 import DeCell.FPG.Frontend.Backend.Components.Charlie.CharlieElement;
-import DeCell.FPG.Frontend.Backend.Components.Charlie.IOpenable;
+import DeCell.FPG.Frontend.Backend.Components.Charlie.Openable;
 import DeCell.FPG.Frontend.Backend.Components.Charlie.OpenableListener;
 import DeCell.FPG.Frontend.Backend.Plugins.LambdaUIPanelPlugin;
 import DeCell.FPG.Frontend.Backend.Plugins.MultiPluginHandler;
@@ -11,18 +11,16 @@ import DeCell.FPG.Frontend.Backend.Renderable.BorderRenderable;
 import DeCell.FPG.Frontend.Backend.Renderable.RenderableHandlerPlugin;
 import DeCell.FPG.JavaSlop.TriConsumer;
 import com.fs.starfarer.api.Global;
-import com.fs.starfarer.api.input.InputEventAPI;
 import com.fs.starfarer.api.ui.ButtonAPI;
 import com.fs.starfarer.api.ui.CustomPanelAPI;
 import org.lwjgl.input.Keyboard;
 
-import java.awt.event.KeyEvent;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class OpenableButtonPanel extends AUIContainer<OpenableButtonPanel, CustomPanelAPI> implements IOpenable {
+public class OpenableButtonPanel extends UIContainer<OpenableButtonPanel, CustomPanelAPI> implements Openable {
 
     private MyButton button;
     private MyPanel container;
@@ -80,7 +78,7 @@ public class OpenableButtonPanel extends AUIContainer<OpenableButtonPanel, Custo
         super(underlying);
     }
 
-    protected TriConsumer<MyPanel, Dictionary<String, Object>, List<AUIElement<?, ?>>> onUIOpen;
+    protected TriConsumer<MyPanel, Dictionary<String, Object>, List<UIElement<?, ?>>> onUIOpen;
     protected Consumer<Dictionary<String, Object>> onUIClose;
 
     private void click(ButtonAPI b) {
@@ -104,7 +102,7 @@ public class OpenableButtonPanel extends AUIContainer<OpenableButtonPanel, Custo
     }
 
 
-    public OpenableButtonPanel setOnUIOpen(TriConsumer<MyPanel, Dictionary<String, Object>, List<AUIElement<?, ?>>> onClick) {
+    public OpenableButtonPanel setOnUIOpen(TriConsumer<MyPanel, Dictionary<String, Object>, List<UIElement<?, ?>>> onClick) {
         this.onUIOpen = onClick;
         return this;
     }

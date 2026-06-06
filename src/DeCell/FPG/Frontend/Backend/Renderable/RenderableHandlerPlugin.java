@@ -1,25 +1,25 @@
 package DeCell.FPG.Frontend.Backend.Renderable;
 
-import DeCell.FPG.Frontend.Backend.Plugins.APluginRenderable;
-import DeCell.FPG.Frontend.Backend.Plugins.CPanelPlugin;
+import DeCell.FPG.Frontend.Backend.Plugins.PluginRenderable;
+import DeCell.FPG.Frontend.Backend.Plugins.PanelPlugin;
 import com.fs.starfarer.api.ui.CustomPanelAPI;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RenderableHandlerPlugin extends CPanelPlugin {
-    private List<APluginRenderable> renderBelows = new ArrayList<>();
-    private List<APluginRenderable> renders = new ArrayList<>();
+public class RenderableHandlerPlugin extends PanelPlugin {
+    private List<PluginRenderable> renderBelows = new ArrayList<>();
+    private List<PluginRenderable> renders = new ArrayList<>();
 
     public RenderableHandlerPlugin() {
     }
 
-    public RenderableHandlerPlugin addBelow(APluginRenderable _0) {
+    public RenderableHandlerPlugin addBelow(PluginRenderable _0) {
         renderBelows.add(_0);
         return this;
     }
 
-    public RenderableHandlerPlugin addAbove(APluginRenderable _0) {
+    public RenderableHandlerPlugin addAbove(PluginRenderable _0) {
         renders.add(_0);
         return this;
     }
@@ -27,22 +27,22 @@ public class RenderableHandlerPlugin extends CPanelPlugin {
 
     @Override
     public void init(CustomPanelAPI parent) {
-        for (APluginRenderable $_ : renderBelows) {
+        for (PluginRenderable $_ : renderBelows) {
             $_.init(parent);
         }
 
-        for (APluginRenderable $_ : renders) {
+        for (PluginRenderable $_ : renders) {
             $_.init(parent);
         }
     }
 
     @Override
     public void update(CustomPanelAPI parent) {
-        for (APluginRenderable $_ : renderBelows) {
+        for (PluginRenderable $_ : renderBelows) {
             $_.update(parent);
         }
 
-        for (APluginRenderable $_ : renders) {
+        for (PluginRenderable $_ : renders) {
             $_.update(parent);
         }
         this.needsUpdate = false;
@@ -60,7 +60,7 @@ public class RenderableHandlerPlugin extends CPanelPlugin {
             return;
 
         super.renderBelow(alphaMult);
-        for (APluginRenderable $_ : renderBelows) {
+        for (PluginRenderable $_ : renderBelows) {
             $_.renderBelow(alphaMult);
         }
     }
@@ -70,12 +70,12 @@ public class RenderableHandlerPlugin extends CPanelPlugin {
         if (updateNeeded())
             return;
 
-        for (APluginRenderable $_ : renders) {
+        for (PluginRenderable $_ : renders) {
             $_.render(alphaMult);
         }
     }
 
     private boolean updateNeeded() {
-        return renderBelows.stream().anyMatch(APluginRenderable::needsUpdate) || renders.stream().anyMatch(APluginRenderable::needsUpdate);
+        return renderBelows.stream().anyMatch(PluginRenderable::needsUpdate) || renders.stream().anyMatch(PluginRenderable::needsUpdate);
     }
 }

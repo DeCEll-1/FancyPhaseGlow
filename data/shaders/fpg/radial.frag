@@ -24,12 +24,6 @@ void main()
 
     angle += time * speed;
 
-    // === SPIRAL MASK ===
-    // float spiral = sin(angle * float(armCount)) * 0.5 + 0.5;
-    // spiral = smoothstep(0.5 - thickness, 0.5 + thickness, spiral);
-
-    // === COLOR CYCLING (this was the main bug) ===
-    // Use the angle directly for color, NOT the spiral value
     float colorIndex = mod(angle * float(armCount) / (3.14159 * 2.0), float(numColors));
     int idx1 = int(floor(colorIndex));
     int idx2 = idx1 + 1;
@@ -43,6 +37,4 @@ void main()
     float finalAlpha = texColor.a;
 
     gl_FragColor = vec4(finalRGB * gl_Color.rgb, finalAlpha * gl_Color.a);
-    // gl_FragColor = vec4(vec2(uv), 0., finalAlpha * gl_Color.a);
-    // gl_FragColor = texColor * gl_Color;
 }

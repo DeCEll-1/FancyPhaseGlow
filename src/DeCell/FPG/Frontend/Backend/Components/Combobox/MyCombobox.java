@@ -1,12 +1,10 @@
 package DeCell.FPG.Frontend.Backend.Components.Combobox;
 
-import DeCell.FPG.Frontend.Backend.AUIContainer;
-import DeCell.FPG.Frontend.Backend.AUIElement;
+import DeCell.FPG.Frontend.Backend.UIContainer;
 import DeCell.FPG.Frontend.Backend.Components.MyButton;
 import DeCell.FPG.Frontend.Backend.Components.MyPanel;
 import DeCell.FPG.Frontend.Backend.Components.MyTooltip;
 import DeCell.FPG.Frontend.Backend.Renderable.RenderableHandlerPlugin;
-import com.fs.starfarer.api.input.InputEventAPI;
 import com.fs.starfarer.api.ui.Alignment;
 import com.fs.starfarer.api.ui.ButtonAPI;
 import com.fs.starfarer.api.ui.CutStyle;
@@ -16,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class MyCombobox extends AUIContainer<MyCombobox, UIComponentAPI> {
+public class MyCombobox extends UIContainer<MyCombobox, UIComponentAPI> {
 
     private MyButton button;
     private MyPanel panel;
@@ -28,6 +26,7 @@ public class MyCombobox extends AUIContainer<MyCombobox, UIComponentAPI> {
         this.button = _0;
         this.panel = _2;
         button.setOnClick(this::click);
+        _2.addElement(this);
     }
 
     public MyCombobox setOnUpdate(Consumer<ComboboxElement> onChange) {

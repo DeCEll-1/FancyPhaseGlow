@@ -1,13 +1,11 @@
 package DeCell.FPG.Frontend.Backend.Components.Charlie;
 
-import DeCell.FPG.Frontend.Backend.AUIContainer;
-import DeCell.FPG.Frontend.Backend.AUIElement;
+import DeCell.FPG.Frontend.Backend.UIContainer;
 import DeCell.FPG.Frontend.Backend.Components.MyPanel;
 import DeCell.FPG.Frontend.Backend.Plugins.MultiPluginHandler;
 import DeCell.FPG.Frontend.Backend.Renderable.BackgroundRenderable;
 import DeCell.FPG.Frontend.Backend.Renderable.RenderableHandlerPlugin;
 import com.fs.starfarer.api.ui.CustomPanelAPI;
-import com.fs.starfarer.api.ui.UIComponentAPI;
 
 import java.awt.*;
 
@@ -16,7 +14,7 @@ import java.awt.*;
 //        .inBL(0, 0);
 
 // heres charlie, his job is to make the behind of the panels darker
-public class CharlieElement extends AUIContainer<CharlieElement, CustomPanelAPI> {
+public class CharlieElement extends UIContainer<CharlieElement, CustomPanelAPI> {
 
     private final BackgroundRenderable background = new BackgroundRenderable(new Color(0x9A000000, true));
     private MultiPluginHandler plugin;
@@ -24,6 +22,7 @@ public class CharlieElement extends AUIContainer<CharlieElement, CustomPanelAPI>
     public CharlieElement(MyPanel parent) {
         super(parent.u.createCustomPanel(parent.w(), parent.h(), new MultiPluginHandler()));
         parent.addComponent(this.u).inBL(0, 0);
+        parent.addElement(this);
 
         this.plugin = ((MultiPluginHandler) this.u.getPlugin());
         this.plugin.add(new RenderableHandlerPlugin().addBelow(background));
@@ -38,8 +37,9 @@ public class CharlieElement extends AUIContainer<CharlieElement, CustomPanelAPI>
         super(customPanelAPI);
     }
 
-    public <T extends AUIContainer<?, ?> & IOpenable> CharlieElement addOpenable(T o) {
+    public <T extends UIContainer<?, ?> & Openable> CharlieElement addOpenable(T o) {
         this.u.addComponent(o.u);
+        this.addElement(o);
         o.setOnOpenClose(this::onOpenStateChanged);
         return this;
     }

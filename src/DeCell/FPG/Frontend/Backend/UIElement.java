@@ -7,7 +7,7 @@ import com.fs.starfarer.api.ui.UIComponentAPI;
 import java.util.List;
 import java.util.function.Consumer;
 
-public abstract class AUIElement<T extends AUIElement<T, U>, U extends UIComponentAPI> {
+public abstract class UIElement<T extends UIElement<T, U>, U extends UIComponentAPI> {
     public final U u; // underlying
 
     protected Consumer<U> onHoverEnter;
@@ -16,7 +16,7 @@ public abstract class AUIElement<T extends AUIElement<T, U>, U extends UICompone
 
     protected boolean wasHovered = false;
 
-    public AUIElement(U underlying) {
+    public UIElement(U underlying) {
         this.u = underlying;
     }
 
@@ -63,7 +63,7 @@ public abstract class AUIElement<T extends AUIElement<T, U>, U extends UICompone
         return (T) this;
     }
 
-    public T addTo(List<AUIElement<?, ?>> l) {
+    public T addTo(List<UIElement<?, ?>> l) {
         l.add(this);
         return (T) this;
     }
@@ -73,7 +73,7 @@ public abstract class AUIElement<T extends AUIElement<T, U>, U extends UICompone
         return (T) this;
     }
 
-    public T SetOnHover(Consumer<U> onHover) {   // if you added this
+    public T SetOnHover(Consumer<U> onHover) {  
         this.onHover = onHover;
         return (T) this;
     }

@@ -1,0 +1,60 @@
+{
+    "$schema": "./../../../Schemav1.json",
+    "Shaders": [
+        {
+            "ID": "fpg_radial",
+            "Title": "Radial",
+            "FragmentShaderPath": "./radial.frag", // dot (.) at the start of the file path is a hard coded special case
+            // it will replace the dot with data/shaders/fpg
+            "Uniforms": [
+                {
+                    "Name": "textureSampler",
+                    "Type": "sampler2D",
+                    "Value": "phase_texture"
+                },
+                {
+                    "Name": "time",
+                    "Type": "float",
+                    "Value": "time"
+                },
+                {
+                    "Name": "armCount",
+                    "Type": "int",
+                    "Value": 9,
+                    "Modifyable": true
+                },
+                {
+                    "Name": "speed",
+                    "Type": "float",
+                    "Value": 0.25,
+                    "Modifyable": true
+                },
+                {
+                    "Name": "colors",
+                    "Type": "col3[]",
+                    "Value": [
+                        [ 0, 255, 255 ],
+                        [ 255, 0, 255 ],
+                        [ 255, 255, 0 ]
+                    ],
+                    "Modifyable": true
+                },
+                {
+                    "Name": "numColors",
+                    "Type": "int",
+                    "Value": 3
+                },
+                {
+                    "Name": "texWidth",
+                    "Type": "float",
+                    "Value": "texWidth"
+                },
+                {
+                    "Name": "texHeight",
+                    "Type": "float",
+                    "Value": "texHeight"
+                }
+            ]
+        }
+    ]
+}

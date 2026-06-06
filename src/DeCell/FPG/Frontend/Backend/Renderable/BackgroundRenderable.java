@@ -1,15 +1,12 @@
 package DeCell.FPG.Frontend.Backend.Renderable;
 
-import DeCell.FPG.Frontend.Backend.Plugins.APluginRenderable;
-import DeCell.FPG.Frontend.Backend.Rect;
+import DeCell.FPG.Frontend.Backend.Plugins.PluginRenderable;
 import DeCell.FPG.Misc;
-import com.fs.starfarer.api.ui.CustomPanelAPI;
-import com.fs.starfarer.api.ui.PositionAPI;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 
-public class BackgroundRenderable extends APluginRenderable {
+public class BackgroundRenderable extends PluginRenderable {
     Color c;
     public boolean render = true;
 

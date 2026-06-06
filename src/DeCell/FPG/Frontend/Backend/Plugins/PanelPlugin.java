@@ -3,7 +3,7 @@ package DeCell.FPG.Frontend.Backend.Plugins;
 import com.fs.starfarer.api.campaign.BaseCustomUIPanelPlugin;
 import com.fs.starfarer.api.ui.CustomPanelAPI;
 
-public class CPanelPlugin extends BaseCustomUIPanelPlugin {
+public class PanelPlugin extends BaseCustomUIPanelPlugin {
     public void init(CustomPanelAPI parent) {
 
     }

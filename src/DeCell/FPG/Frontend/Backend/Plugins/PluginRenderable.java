@@ -4,7 +4,7 @@ import DeCell.FPG.Frontend.Backend.Rect;
 import com.fs.starfarer.api.ui.CustomPanelAPI;
 import com.fs.starfarer.api.ui.PositionAPI;
 
-public abstract class APluginRenderable {
+public abstract class PluginRenderable {
     protected Rect zone;
 
     private void updateZone(PositionAPI p) {

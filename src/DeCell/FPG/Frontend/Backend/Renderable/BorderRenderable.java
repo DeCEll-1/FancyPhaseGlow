@@ -1,14 +1,13 @@
 package DeCell.FPG.Frontend.Backend.Renderable;
 
-import DeCell.FPG.Frontend.Backend.Plugins.APluginRenderable;
+import DeCell.FPG.Frontend.Backend.Plugins.PluginRenderable;
 import DeCell.FPG.Frontend.Backend.Rect;
 import com.fs.starfarer.api.graphics.SpriteAPI;
 import com.fs.starfarer.api.ui.CustomPanelAPI;
-import com.fs.starfarer.api.ui.PositionAPI;
 
 import static org.lwjgl.opengl.GL11.*;
 
-public class BorderRenderable extends APluginRenderable {
+public class BorderRenderable extends PluginRenderable {
 
     private SpriteAPI borderSprite;     // The border texture (9-patch style recommended)
 

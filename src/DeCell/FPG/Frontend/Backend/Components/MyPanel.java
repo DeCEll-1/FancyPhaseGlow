@@ -1,57 +1,61 @@
 package DeCell.FPG.Frontend.Backend.Components;
 
-import DeCell.FPG.Frontend.Backend.AUIElement;
-import DeCell.FPG.Frontend.Backend.Plugins.CPanelPlugin;
+import DeCell.FPG.Frontend.Backend.UIContainer;
+import DeCell.FPG.Frontend.Backend.UIElement;
+import DeCell.FPG.Frontend.Backend.Plugins.PanelPlugin;
 import com.fs.starfarer.api.Global;
+import com.fs.starfarer.api.input.InputEventAPI;
 import com.fs.starfarer.api.ui.CustomPanelAPI;
 import com.fs.starfarer.api.ui.PositionAPI;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.ui.UIPanelAPI;
 
-public class MyPanel extends AUIElement<MyPanel, CustomPanelAPI> {
-    CPanelPlugin plugin;
+import java.util.List;
+
+public class MyPanel extends UIContainer<MyPanel, CustomPanelAPI> {
+    PanelPlugin plugin;
 
     //#region constructors
-    public MyPanel(float w, float h, CPanelPlugin p, MyPanel parent, boolean init) {
+    public MyPanel(float w, float h, PanelPlugin p, MyPanel parent, boolean init) {
         super(parent.u.createCustomPanel(w, h, p));
         this.plugin = p;
         if (init) initPlugin();
-        parent.addComponent(u);
+        parent.addComponent(this);
     }
 
-    public MyPanel(float w, float h, CPanelPlugin p, CustomPanelAPI parent, boolean init) {
+    public MyPanel(float w, float h, PanelPlugin p, CustomPanelAPI parent, boolean init) {
         super(parent.createCustomPanel(w, h, p));
         this.plugin = p;
         if (init) initPlugin();
         parent.addComponent(u);
     }
 
-    public MyPanel(float w, float h, CPanelPlugin p, UIPanelAPI parent, boolean init) {
+    public MyPanel(float w, float h, PanelPlugin p, UIPanelAPI parent, boolean init) {
         super(Global.getSettings().createCustom(w, h, p));
         this.plugin = p;
         if (init) initPlugin();
         parent.addComponent(u);
     }
 
-    public MyPanel(float w, float h, CPanelPlugin p, boolean init) {
+    public MyPanel(float w, float h, PanelPlugin p, boolean init) {
         super(Global.getSettings().createCustom(w, h, p));
         this.plugin = p;
         if (init) initPlugin();
     }
 
-    public MyPanel(float w, float h, CPanelPlugin p, MyPanel parent) {
+    public MyPanel(float w, float h, PanelPlugin p, MyPanel parent) {
         this(w, h, p, parent, true);
     }
 
-    public MyPanel(float w, float h, CPanelPlugin p, CustomPanelAPI parent) {
+    public MyPanel(float w, float h, PanelPlugin p, CustomPanelAPI parent) {
         this(w, h, p, parent, true);
     }
 
-    public MyPanel(float w, float h, CPanelPlugin p, UIPanelAPI parent) {
+    public MyPanel(float w, float h, PanelPlugin p, UIPanelAPI parent) {
         this(w, h, p, parent, true);
     }
 
-    public MyPanel(float w, float h, CPanelPlugin p) {
+    public MyPanel(float w, float h, PanelPlugin p) {
         this(w, h, p, true);
     }
 
@@ -78,6 +82,7 @@ public class MyPanel extends AUIElement<MyPanel, CustomPanelAPI> {
     }
 
     public PositionAPI addUIElement(MyTooltip _0) {
+        addElement(_0);
         return u.addUIElement(_0.u);
     }
 
@@ -86,6 +91,7 @@ public class MyPanel extends AUIElement<MyPanel, CustomPanelAPI> {
     }
 
     public PositionAPI addComponent(MyPanel _0) {
+        addElement(_0);
         return u.addComponent(_0.u);
     }
 

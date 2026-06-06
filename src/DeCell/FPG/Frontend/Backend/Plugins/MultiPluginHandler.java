@@ -7,13 +7,13 @@ import com.fs.starfarer.api.ui.PositionAPI;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MultiPluginHandler extends CPanelPlugin {
-    private List<CPanelPlugin> plugins = new ArrayList<>();
+public class MultiPluginHandler extends PanelPlugin {
+    private List<PanelPlugin> plugins = new ArrayList<>();
 
     public MultiPluginHandler() {
     }
 
-    public MultiPluginHandler add(CPanelPlugin _0) {
+    public MultiPluginHandler add(PanelPlugin _0) {
         plugins.add(_0);
         return this;
     }
@@ -21,14 +21,14 @@ public class MultiPluginHandler extends CPanelPlugin {
     // --- CustomPanelAPI specific methods ---
     @Override
     public void init(CustomPanelAPI parent) {
-        for (CPanelPlugin plugin : plugins) {
+        for (PanelPlugin plugin : plugins) {
             plugin.init(parent);
         }
     }
 
     @Override
     public void update(CustomPanelAPI parent) {
-        for (CPanelPlugin plugin : plugins) {
+        for (PanelPlugin plugin : plugins) {
             plugin.update(parent);
         }
 
@@ -39,28 +39,28 @@ public class MultiPluginHandler extends CPanelPlugin {
 
     @Override
     public void positionChanged(PositionAPI position) {
-        for (CPanelPlugin plugin : plugins) {
+        for (PanelPlugin plugin : plugins) {
             plugin.positionChanged(position);
         }
     }
 
     @Override
     public void renderBelow(float alphaMult) {
-        for (CPanelPlugin plugin : plugins) {
+        for (PanelPlugin plugin : plugins) {
             plugin.renderBelow(alphaMult);
         }
     }
 
     @Override
     public void render(float alphaMult) {
-        for (CPanelPlugin plugin : plugins) {
+        for (PanelPlugin plugin : plugins) {
             plugin.render(alphaMult);
         }
     }
 
     @Override
     public void advance(float amount) {
-        for (CPanelPlugin plugin : plugins) {
+        for (PanelPlugin plugin : plugins) {
             plugin.advance(amount);
         }
 
@@ -70,14 +70,14 @@ public class MultiPluginHandler extends CPanelPlugin {
 
     @Override
     public void processInput(List<InputEventAPI> events) {
-        for (CPanelPlugin plugin : plugins) {
+        for (PanelPlugin plugin : plugins) {
             plugin.processInput(events);
         }
     }
 
     @Override
     public void buttonPressed(Object buttonId) {
-        for (CPanelPlugin plugin : plugins) {
+        for (PanelPlugin plugin : plugins) {
             plugin.buttonPressed(buttonId);
         }
     }
