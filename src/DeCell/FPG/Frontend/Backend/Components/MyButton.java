@@ -1,13 +1,16 @@
 package DeCell.FPG.Frontend.Backend.Components;
 
+import DeCell.FPG.FancyPhaseGlow;
 import DeCell.FPG.Frontend.Backend.UIElement;
+import com.fs.starfarer.api.input.InputEventAPI;
 import com.fs.starfarer.api.ui.Alignment;
 import com.fs.starfarer.api.ui.ButtonAPI;
 import com.fs.starfarer.api.ui.CutStyle;
 import com.fs.starfarer.api.util.Misc;
+import org.lwjgl.input.Mouse;
 
 import java.awt.*;
-import java.util.Dictionary;
+import java.util.List;
 import java.util.function.Consumer;
 
 public class MyButton extends UIElement<MyButton, ButtonAPI> {
@@ -15,12 +18,14 @@ public class MyButton extends UIElement<MyButton, ButtonAPI> {
     public MyButton(String text, float width, float height, float pad, MyTooltip parent) {
         super(parent.addButton(text, null, width, height, pad));
         parent.addElement(this);
+        this.parent = parent;
     }
 
     public MyButton(String text, Color base, Color bg,
                     float width, float height, float pad, MyTooltip parent) {
         super(parent.addButton(text, null, base, bg, width, height, pad));
         parent.addElement(this);
+        this.parent = parent;
     }
 
     public MyButton(String text, Color base, Color bg,
@@ -28,6 +33,7 @@ public class MyButton extends UIElement<MyButton, ButtonAPI> {
                     float width, float height, float pad, MyTooltip parent) {
         super(parent.addButton(text, null, base, bg, align, style, width, height, pad));
         parent.addElement(this);
+        this.parent = parent;
     }
 
     public MyButton(String text, Alignment align, CutStyle style,
@@ -36,26 +42,58 @@ public class MyButton extends UIElement<MyButton, ButtonAPI> {
                 align, style, width, height, pad, parent);
     }
 
-    protected Consumer<MyButton> onClick;
-    protected boolean wasChecked = false;
+    protected Consumer<MyButton> onMouseDown;
+    protected Consumer<MyButton> onMouseUp;
+    protected boolean wasClickedLastFrame = false;
+    protected boolean isDragging = false;
+    protected MyTooltip parent;
+
+    public MyTooltip getParent() {
+        return parent;
+    }
+
+    public boolean wasClickedLastFrame() {
+        return wasClickedLastFrame;
+    }
+
+    public boolean isDragging() {
+        return isDragging;
+    }
 
     @Override
     public void advance(float amount) {
-        if (u == null) return;
-
-        boolean currentlyChecked = u.isChecked();
-        if (currentlyChecked && !wasChecked) {
-            if (onClick != null) {
-                onClick.accept(this);
-            }
-            u.setChecked(false);
-        }
-        wasChecked = currentlyChecked;
+        super.advance(amount);
     }
 
+    @Override
+    public void processInput(List<InputEventAPI> events) {
+        super.processInput(events);
 
-    public MyButton setOnClick(Consumer<MyButton> onClick) {
-        this.onClick = onClick;
+        boolean isMouseOver = this.rect().containsMouse();
+        boolean isLeftMouseDown = Mouse.isButtonDown(0);
+
+        if (isLeftMouseDown && isMouseOver && !wasClickedLastFrame) {
+            isDragging = true;
+            if (onMouseDown != null)
+                onMouseDown.accept(this);
+        }
+
+        if (!isLeftMouseDown && isDragging) {
+            isDragging = false;
+            if (onMouseUp != null)
+                onMouseUp.accept(this);
+        }
+
+        wasClickedLastFrame = isLeftMouseDown;
+    }
+
+    public MyButton setOnMouseDown(Consumer<MyButton> onMouseDown) {
+        this.onMouseDown = onMouseDown;
+        return this;
+    }
+
+    public MyButton setOnMouseUp(Consumer<MyButton> onMouseUp) {
+        this.onMouseUp = onMouseUp;
         return this;
     }
 

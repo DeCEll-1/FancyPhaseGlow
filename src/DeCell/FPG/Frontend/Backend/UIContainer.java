@@ -22,6 +22,10 @@ public abstract class UIContainer<T extends UIElement<T, U>, U extends UICompone
         this.UIElements.add(element);
     }
 
+    public void removeElement(UIElement<?, ?> element) {
+        this.UIElements.remove(element);
+    }
+
     @Override
     public void advance(float amount) {
         for (UIElement<?, ?> element : activeUIElements) {
@@ -36,6 +40,7 @@ public abstract class UIContainer<T extends UIElement<T, U>, U extends UICompone
 
     @Override
     public void processInput(List<InputEventAPI> events) {
+        super.processInput(events);
         for (UIElement<?, ?> element : activeUIElements) {
             element.processInput(events);
         }

@@ -11,7 +11,6 @@ import DeCell.FPG.Frontend.Backend.Renderable.BorderRenderable;
 import DeCell.FPG.Frontend.Backend.Renderable.RenderableHandlerPlugin;
 import DeCell.FPG.JavaSlop.TriConsumer;
 import com.fs.starfarer.api.Global;
-import com.fs.starfarer.api.ui.ButtonAPI;
 import com.fs.starfarer.api.ui.CustomPanelAPI;
 import com.fs.starfarer.api.ui.UIPanelAPI;
 import org.lwjgl.input.Keyboard;
@@ -34,7 +33,7 @@ public class DialougeButtonPanel extends UIContainer<DialougeButtonPanel, Custom
         parent.addElement(this);
 
         this.button = _1;
-        this.button.setOnClick(this::click);
+        this.button.setOnMouseDown(this::click);
     }
 
     public DialougeButtonPanel(float w, float h, MyButton _1, MyPanel parent) {
@@ -43,7 +42,7 @@ public class DialougeButtonPanel extends UIContainer<DialougeButtonPanel, Custom
         parent.addElement(this);
 
         this.button = _1;
-        this.button.setOnClick(this::click);
+        this.button.setOnMouseDown(this::click);
     }
 
 
@@ -67,7 +66,7 @@ public class DialougeButtonPanel extends UIContainer<DialougeButtonPanel, Custom
 
         MyTooltip exitTooltip = new MyTooltip(24, 24, false, container).addTo(UIElements).inTR(26, 16);
         new MyButton("X", 24, 24, 0, exitTooltip).
-                setOnClick(this::click).addTo(UIElements);
+                setOnMouseDown(this::click).addTo(UIElements);
     }
 
     public DialougeButtonPanel(CustomPanelAPI underlying) {

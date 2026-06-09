@@ -1,6 +1,7 @@
 package DeCell.FPG.Frontend.Backend;
 
 import com.fs.starfarer.api.graphics.SpriteAPI;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 
@@ -17,6 +18,18 @@ public class Rect {
         this.h = h;
     }
 
+    public boolean containsMouse() {
+        // Fetch the current mouse coordinates
+        int mouseX = Mouse.getX();
+        int mouseY = Mouse.getY();
+
+        // Check if the mouse point falls within the rectangle's boundaries
+        return mouseX >= this.x &&
+                mouseX <= (this.x + this.w) &&
+                mouseY >= this.y &&
+                mouseY <= (this.y + this.h);
+    }
+    
     // texCoordinates
     public void render(Rect tc) {
         GL11.glBegin(GL11.GL_TRIANGLE_STRIP);

@@ -18,4 +18,8 @@ public class Misc {
                 c.getAlpha() / 255f
         );
     }
+
+    public static float clamp(float value, float min, float max) {
+        return Math.max(min, Math.min(value, max));
+    }
 }

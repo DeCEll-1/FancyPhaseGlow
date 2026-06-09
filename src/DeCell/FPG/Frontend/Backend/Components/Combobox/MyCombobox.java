@@ -7,7 +7,6 @@ import DeCell.FPG.Frontend.Backend.Components.MyTooltip;
 import DeCell.FPG.Frontend.Backend.Renderable.RenderableHandlerPlugin;
 import DeCell.FPG.Frontend.Backend.UIElement;
 import com.fs.starfarer.api.ui.Alignment;
-import com.fs.starfarer.api.ui.ButtonAPI;
 import com.fs.starfarer.api.ui.CutStyle;
 import com.fs.starfarer.api.ui.UIComponentAPI;
 
@@ -28,7 +27,7 @@ public class MyCombobox extends UIContainer<MyCombobox, UIComponentAPI> {
         super(_2.u);
         this.button = _0;
         this.panel = _2;
-        button.setOnClick(this::click);
+        button.setOnMouseDown(this::click);
         _2.addElement(this);
     }
 
@@ -73,7 +72,7 @@ public class MyCombobox extends UIContainer<MyCombobox, UIComponentAPI> {
             new MyButton.Builder(element.text, w, itemHeight, elementTooltip).setStyle(Alignment.MID, style).build()
                     .setCustomData(element.data)
                     .initInteralData(pair("index", i))
-                    .setOnClick(b -> {
+                    .setOnMouseDown(b -> {
                                 setIndex(b.getFromInternal("index"));
                             }
                     ).addTo(UIElements).inTL(0, 0);

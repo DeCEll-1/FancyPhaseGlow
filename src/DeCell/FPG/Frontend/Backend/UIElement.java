@@ -12,9 +12,9 @@ import java.util.function.Consumer;
 public abstract class UIElement<T extends UIElement<T, U>, U extends UIComponentAPI> {
     public final U u; // underlying
 
-    protected Consumer<U> onHoverEnter;
-    protected Consumer<U> onHoverExit;
-    protected Consumer<U> onHover;
+    protected Consumer<T> onMouseEnter;
+    protected Consumer<T> onMouseExit;
+    protected Consumer<T> onHover;
 
     protected boolean wasHovered = false;
 
@@ -41,32 +41,18 @@ public abstract class UIElement<T extends UIElement<T, U>, U extends UIComponent
         if (u == null) return;
 
         boolean isCurrentlyHovered = false;
-        boolean mouseEventExists = false;
 
-        for (InputEventAPI event : events) {
-            if (event.isMouseEvent())
-                mouseEventExists = true; // need to check for this cuz the game consumes the whole mouse event on click
-            if (event.isMouseMoveEvent()) {
-                PositionAPI pos = u.getPosition();
-                if (pos != null && pos.containsEvent(event)) {
-                    isCurrentlyHovered = true;
-                }
-            }
-        }
-
-        if (!mouseEventExists) {
-            if (wasHovered && onHover != null)
-                onHover.accept(u);
-            return;
+        if (this.rect().containsMouse()) {
+            isCurrentlyHovered = true;
         }
 
         if (isCurrentlyHovered && onHover != null)
-            onHover.accept(u);
+            onHover.accept((T) this);
 
-        if ((isCurrentlyHovered && !wasHovered) && onHoverEnter != null)
-            onHoverEnter.accept(u);
-        else if ((!isCurrentlyHovered && wasHovered) && onHoverExit != null)
-            onHoverExit.accept(u);
+        if ((isCurrentlyHovered && !wasHovered) && onMouseEnter != null)
+            onMouseEnter.accept((T) this);
+        else if ((!isCurrentlyHovered && wasHovered) && onMouseExit != null)
+            onMouseExit.accept((T) this);
 
 
         wasHovered = isCurrentlyHovered;
@@ -85,18 +71,18 @@ public abstract class UIElement<T extends UIElement<T, U>, U extends UIComponent
         return (T) this;
     }
 
-    public T setOnHoverEnter(Consumer<U> onHoverEnter) {
-        this.onHoverEnter = onHoverEnter;
+    public T setOnMouseEnter(Consumer<T> onMouseEnter) {
+        this.onMouseEnter = onMouseEnter;
         return (T) this;
     }
 
-    public T SetOnHover(Consumer<U> onHover) {
+    public T setOnHover(Consumer<T> onHover) {
         this.onHover = onHover;
         return (T) this;
     }
 
-    public T setOnHoverExit(Consumer<U> onHoverExit) {
-        this.onHoverExit = onHoverExit;
+    public T setOnMouseExit(Consumer<T> onMouseExit) {
+        this.onMouseExit = onMouseExit;
         return (T) this;
     }
 
