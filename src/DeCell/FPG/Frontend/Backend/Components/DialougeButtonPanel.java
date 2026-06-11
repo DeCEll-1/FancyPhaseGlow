@@ -54,12 +54,13 @@ public class DialougeButtonPanel extends UIContainer<DialougeButtonPanel, Custom
                                 new BorderRenderable(Global.getSettings().getSprite("fpg", "border2"), 32)
                                         .setPadding(-8).setRenderInside(true))
                 ).add(new LambdaUIPanelPlugin()
-                        .onProcessInput(e ->
-                                e.forEach($_ -> {
+                        .onProcessInput(e -> {
                                     if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
                                         this.click();
-                                    $_.consume();
-                                })
+                                    e.forEach($_ -> {
+                                        $_.consume();
+                                    });
+                                }
                         )
                 ), this.u).addTo(UIElements).inBL(0, 0);
 

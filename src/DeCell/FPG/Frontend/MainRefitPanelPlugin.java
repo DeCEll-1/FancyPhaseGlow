@@ -1,13 +1,10 @@
 package DeCell.FPG.Frontend;
 
-import DeCell.FPG.FancyPhaseGlow;
 import DeCell.FPG.Frontend.Backend.*;
-import DeCell.FPG.Frontend.Backend.Components.Charlie.CharlieElement;
 import DeCell.FPG.Frontend.Backend.Components.*;
 import DeCell.FPG.Frontend.Backend.Components.Combobox.ComboboxElement;
 import DeCell.FPG.Frontend.Backend.Components.Combobox.MyCombobox;
 import DeCell.FPG.Frontend.Backend.Plugins.PanelPlugin;
-import DeCell.FPG.Frontend.Backend.Renderable.BackgroundRenderable;
 import com.fs.starfarer.api.input.InputEventAPI;
 import com.fs.starfarer.api.ui.*;
 import com.fs.starfarer.combat.entities.Ship;
@@ -42,7 +39,7 @@ public class MainRefitPanelPlugin extends PanelPlugin {
 
 
         new DialougeButtonPanel.Builder(720, 640, panelOpeningButton).withCharlie().popup(UIElements)
-                .initInteralData(pair("ship", ship))
+                .addToInternalData(pair("ship", ship))
                 .setOnUIOpen((panel, dialogue, _UIElements) ->
                 {
                     Ship currShip = dialogue.getFromInternal("ship");
@@ -63,14 +60,18 @@ public class MainRefitPanelPlugin extends PanelPlugin {
                             .addItem(new ComboboxElement("balls2"))
                             .addItem(new ComboboxElement("balls3"))
                             .addItem(new ComboboxElement("balls4"))
-                            .setOnUpdate(el -> {
+                            .setOnUpdate((cb, el) -> {
                             })
                     ;
 
-                    new Slider.Builder(160, panel)
-                            .addToSliderBackground(new BackgroundRenderable(new Color(0x404040)))
-                            .position(s -> s.inBL(32, 32)).build();
 
+                    new ColorPicker.Builder().withAlpha().build(panel).inBL(20, 20)
+                            .addToInternalData(pair("debug_btn", debugButton))
+                            .setOnColorChange(s -> {
+                                MyButton dbgButton = s.getFromInternal("debug_btn");
+                                dbgButton.setText(s.getColor().toString());
+
+                            });
 
                 });
     }

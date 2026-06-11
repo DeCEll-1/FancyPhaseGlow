@@ -12,6 +12,7 @@ import com.fs.starfarer.api.ui.UIComponentAPI;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import static DeCell.FPG.Frontend.Backend.DataPair.pair;
@@ -31,7 +32,7 @@ public class MyCombobox extends UIContainer<MyCombobox, UIComponentAPI> {
         _2.addElement(this);
     }
 
-    public MyCombobox setOnUpdate(Consumer<ComboboxElement> onChange) {
+    public MyCombobox setOnUpdate(BiConsumer<MyCombobox, ComboboxElement> onChange) {
         this.onChange = onChange;
         return this;
     }
@@ -44,7 +45,7 @@ public class MyCombobox extends UIContainer<MyCombobox, UIComponentAPI> {
     }
 
     private List<ComboboxElement> elements = new ArrayList<>();
-    protected Consumer<ComboboxElement> onChange;
+    protected BiConsumer<MyCombobox, ComboboxElement> onChange;
 
     public MyCombobox addItem(ComboboxElement e) {
         elements.add(e);
@@ -71,7 +72,7 @@ public class MyCombobox extends UIContainer<MyCombobox, UIComponentAPI> {
             CutStyle style = i == elements.size() - 1 ? CutStyle.BOTTOM : CutStyle.NONE;
             new MyButton.Builder(element.text, w, itemHeight, elementTooltip).setStyle(Alignment.MID, style).build()
                     .setCustomData(element.data)
-                    .initInteralData(pair("index", i))
+                    .addToInternalData(pair("index", i))
                     .setOnMouseDown(b -> {
                                 setIndex(b.getFromInternal("index"));
                             }
@@ -89,7 +90,7 @@ public class MyCombobox extends UIContainer<MyCombobox, UIComponentAPI> {
             button.u.setCustomData(element.data);
         }
         if (onChange != null) {
-            onChange.accept(element);
+            onChange.accept(this, element);
         }
         if (listOpen) {
             closeList();

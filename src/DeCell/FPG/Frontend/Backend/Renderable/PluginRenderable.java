@@ -1,4 +1,4 @@
-package DeCell.FPG.Frontend.Backend.Plugins;
+package DeCell.FPG.Frontend.Backend.Renderable;
 
 import DeCell.FPG.Frontend.Backend.Rect;
 import com.fs.starfarer.api.ui.CustomPanelAPI;
@@ -6,6 +6,7 @@ import com.fs.starfarer.api.ui.PositionAPI;
 
 public abstract class PluginRenderable {
     protected Rect zone;
+    public boolean render = true;
 
     private void updateZone(PositionAPI p) {
         zone = new Rect(p.getX(), p.getY(), p.getWidth(), p.getHeight());

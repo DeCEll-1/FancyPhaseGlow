@@ -3,7 +3,7 @@ package DeCell.FPG.Frontend.Backend.Components.Charlie;
 import DeCell.FPG.Frontend.Backend.UIContainer;
 import DeCell.FPG.Frontend.Backend.Components.MyPanel;
 import DeCell.FPG.Frontend.Backend.Plugins.MultiPluginHandler;
-import DeCell.FPG.Frontend.Backend.Renderable.BackgroundRenderable;
+import DeCell.FPG.Frontend.Backend.Renderable.MonoColorRenderable;
 import DeCell.FPG.Frontend.Backend.Renderable.RenderableHandlerPlugin;
 import com.fs.starfarer.api.ui.CustomPanelAPI;
 
@@ -12,7 +12,7 @@ import java.awt.*;
 // heres charlie, his job is to make the behind of the panels darker
 public class CharlieElement extends UIContainer<CharlieElement, CustomPanelAPI> {
 
-    private final BackgroundRenderable background = new BackgroundRenderable(new Color(0x9A000000, true));
+    private final MonoColorRenderable background = new MonoColorRenderable(new Color(0x9A000000, true));
     private MultiPluginHandler plugin;
 
     public CharlieElement(MyPanel parent) {

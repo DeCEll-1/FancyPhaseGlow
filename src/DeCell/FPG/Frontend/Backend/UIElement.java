@@ -1,8 +1,10 @@
 package DeCell.FPG.Frontend.Backend;
 
+import DeCell.FPG.Frontend.Backend.Components.MyButton;
 import com.fs.starfarer.api.input.InputEventAPI;
 import com.fs.starfarer.api.ui.PositionAPI;
 import com.fs.starfarer.api.ui.UIComponentAPI;
+import org.lwjgl.input.Mouse;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -15,14 +17,20 @@ public abstract class UIElement<T extends UIElement<T, U>, U extends UIComponent
     protected Consumer<T> onMouseEnter;
     protected Consumer<T> onMouseExit;
     protected Consumer<T> onHover;
+    protected Consumer<T> onMouseDown;
+    protected Consumer<T> onMouseUp;
+    protected boolean wasClickedLastFrame = false;
+    protected boolean isDragging = false;
 
     protected boolean wasHovered = false;
 
     protected Dictionary<String, Object> internalData = new Hashtable<>();
 
-    public T initInteralData(DataPair... entries) {
+    public T addToInternalData(DataPair... entries) {
         for (DataPair entry : entries) {
             if (entry != null) {
+                if (internalData.get(entry.key) != null)
+                    internalData.remove(entry.key);
                 internalData.put(entry.key, entry.value);
             }
         }
@@ -40,22 +48,48 @@ public abstract class UIElement<T extends UIElement<T, U>, U extends UIComponent
     public void processInput(List<InputEventAPI> events) {
         if (u == null) return;
 
-        boolean isCurrentlyHovered = false;
+        // 1. Gather current state
+        boolean isMouseOver = this.rect().containsMouse();
+        boolean isLeftMouseDown = Mouse.isButtonDown(0);
 
-        if (this.rect().containsMouse()) {
-            isCurrentlyHovered = true;
+        // 2. Handle Drag / Click Logic
+        if (isLeftMouseDown && isMouseOver && !wasClickedLastFrame) {
+            isDragging = true;
+            if (onMouseDown != null) {
+                onMouseDown.accept((T) this);
+            }
         }
 
-        if (isCurrentlyHovered && onHover != null)
+        if (!isLeftMouseDown && isDragging) {
+            isDragging = false;
+            if (onMouseUp != null) {
+                onMouseUp.accept((T) this);
+            }
+        }
+
+        // 3. Handle Hover Logic
+        if (isMouseOver && onHover != null) {
             onHover.accept((T) this);
+        }
 
-        if ((isCurrentlyHovered && !wasHovered) && onMouseEnter != null)
-            onMouseEnter.accept((T) this);
-        else if ((!isCurrentlyHovered && wasHovered) && onMouseExit != null)
-            onMouseExit.accept((T) this);
+        if (isMouseOver && !wasHovered) {
+            if (onMouseEnter != null) {
+                onMouseEnter.accept((T) this);
+            }
+        } else if (!isMouseOver && wasHovered) {
+            if (onMouseExit != null) {
+                onMouseExit.accept((T) this);
+            }
+        }
+
+        // 4. Update historical state for the next frame
+        wasClickedLastFrame = isLeftMouseDown;
+        wasHovered = isMouseOver;
+    }
 
 
-        wasHovered = isCurrentlyHovered;
+    public boolean isDragging() {
+        return isDragging;
     }
 
     public void advance(float amount) {
@@ -83,6 +117,16 @@ public abstract class UIElement<T extends UIElement<T, U>, U extends UIComponent
 
     public T setOnMouseExit(Consumer<T> onMouseExit) {
         this.onMouseExit = onMouseExit;
+        return (T) this;
+    }
+
+    public T setOnMouseDown(Consumer<T> onMouseDown) {
+        this.onMouseDown = onMouseDown;
+        return (T) this;
+    }
+
+    public T setOnMouseUp(Consumer<T> onMouseUp) {
+        this.onMouseUp = onMouseUp;
         return (T) this;
     }
 

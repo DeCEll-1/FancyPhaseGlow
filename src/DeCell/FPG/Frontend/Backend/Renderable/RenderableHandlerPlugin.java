@@ -1,6 +1,5 @@
 package DeCell.FPG.Frontend.Backend.Renderable;
 
-import DeCell.FPG.Frontend.Backend.Plugins.PluginRenderable;
 import DeCell.FPG.Frontend.Backend.Plugins.PanelPlugin;
 import com.fs.starfarer.api.ui.CustomPanelAPI;
 
@@ -9,7 +8,7 @@ import java.util.List;
 
 public class RenderableHandlerPlugin extends PanelPlugin {
     private List<PluginRenderable> renderBelows = new ArrayList<>();
-    private List<PluginRenderable> renders = new ArrayList<>();
+    private List<PluginRenderable> renderAboves = new ArrayList<>();
 
     public RenderableHandlerPlugin() {
     }
@@ -19,9 +18,17 @@ public class RenderableHandlerPlugin extends PanelPlugin {
         return this;
     }
 
+    public List<PluginRenderable> getRenderBelows() {
+        return renderBelows;
+    }
+
     public RenderableHandlerPlugin addAbove(PluginRenderable _0) {
-        renders.add(_0);
+        renderAboves.add(_0);
         return this;
+    }
+
+    public List<PluginRenderable> getRenderAboves() {
+        return renderAboves;
     }
 
 
@@ -31,7 +38,7 @@ public class RenderableHandlerPlugin extends PanelPlugin {
             $_.init(parent);
         }
 
-        for (PluginRenderable $_ : renders) {
+        for (PluginRenderable $_ : renderAboves) {
             $_.init(parent);
         }
     }
@@ -42,7 +49,7 @@ public class RenderableHandlerPlugin extends PanelPlugin {
             $_.update(parent);
         }
 
-        for (PluginRenderable $_ : renders) {
+        for (PluginRenderable $_ : renderAboves) {
             $_.update(parent);
         }
         this.needsUpdate = false;
@@ -61,7 +68,8 @@ public class RenderableHandlerPlugin extends PanelPlugin {
 
         super.renderBelow(alphaMult);
         for (PluginRenderable $_ : renderBelows) {
-            $_.renderBelow(alphaMult);
+            if ($_.render)
+                $_.renderBelow(alphaMult);
         }
     }
 
@@ -70,12 +78,13 @@ public class RenderableHandlerPlugin extends PanelPlugin {
         if (updateNeeded())
             return;
 
-        for (PluginRenderable $_ : renders) {
-            $_.render(alphaMult);
+        for (PluginRenderable $_ : renderAboves) {
+            if ($_.render)
+                $_.render(alphaMult);
         }
     }
 
     private boolean updateNeeded() {
-        return renderBelows.stream().anyMatch(PluginRenderable::needsUpdate) || renders.stream().anyMatch(PluginRenderable::needsUpdate);
+        return renderBelows.stream().anyMatch(PluginRenderable::needsUpdate) || renderAboves.stream().anyMatch(PluginRenderable::needsUpdate);
     }
 }

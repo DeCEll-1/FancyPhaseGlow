@@ -1,6 +1,5 @@
 package DeCell.FPG.Frontend.Backend.Renderable;
 
-import DeCell.FPG.Frontend.Backend.Plugins.PluginRenderable;
 import DeCell.FPG.Frontend.Backend.Rect;
 import com.fs.starfarer.api.graphics.SpriteAPI;
 import com.fs.starfarer.api.ui.CustomPanelAPI;

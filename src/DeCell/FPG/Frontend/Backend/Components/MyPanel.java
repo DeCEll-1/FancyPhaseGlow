@@ -10,8 +10,6 @@ import com.fs.starfarer.api.ui.PositionAPI;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
 import com.fs.starfarer.api.ui.UIPanelAPI;
 
-import java.util.List;
-
 public class MyPanel extends UIContainer<MyPanel, CustomPanelAPI> {
     PanelPlugin plugin;
 
@@ -96,6 +94,9 @@ public class MyPanel extends UIContainer<MyPanel, CustomPanelAPI> {
         return this;
     }
 
+    public <T> T getPlugin() {
+        return (T) this.plugin;
+    }
 
     public static class Builder {
         private final float width;

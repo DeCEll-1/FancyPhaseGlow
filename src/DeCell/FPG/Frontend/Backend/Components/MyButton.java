@@ -42,10 +42,6 @@ public class MyButton extends UIElement<MyButton, ButtonAPI> {
                 align, style, width, height, pad, parent);
     }
 
-    protected Consumer<MyButton> onMouseDown;
-    protected Consumer<MyButton> onMouseUp;
-    protected boolean wasClickedLastFrame = false;
-    protected boolean isDragging = false;
     protected MyTooltip parent;
 
     public MyTooltip getParent() {
@@ -56,49 +52,19 @@ public class MyButton extends UIElement<MyButton, ButtonAPI> {
         return wasClickedLastFrame;
     }
 
-    public boolean isDragging() {
-        return isDragging;
-    }
-
     @Override
     public void advance(float amount) {
         super.advance(amount);
     }
 
-    @Override
-    public void processInput(List<InputEventAPI> events) {
-        super.processInput(events);
-
-        boolean isMouseOver = this.rect().containsMouse();
-        boolean isLeftMouseDown = Mouse.isButtonDown(0);
-
-        if (isLeftMouseDown && isMouseOver && !wasClickedLastFrame) {
-            isDragging = true;
-            if (onMouseDown != null)
-                onMouseDown.accept(this);
-        }
-
-        if (!isLeftMouseDown && isDragging) {
-            isDragging = false;
-            if (onMouseUp != null)
-                onMouseUp.accept(this);
-        }
-
-        wasClickedLastFrame = isLeftMouseDown;
-    }
-
-    public MyButton setOnMouseDown(Consumer<MyButton> onMouseDown) {
-        this.onMouseDown = onMouseDown;
-        return this;
-    }
-
-    public MyButton setOnMouseUp(Consumer<MyButton> onMouseUp) {
-        this.onMouseUp = onMouseUp;
-        return this;
-    }
 
     public MyButton setCustomData(Object data) {
         u.setCustomData(data);
+        return this;
+    }
+
+    public MyButton setText(String text) {
+        u.setText(text);
         return this;
     }
 
