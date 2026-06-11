@@ -19,9 +19,10 @@ import java.util.Set;
 
 public class MyTooltip extends UIContainer<MyTooltip, TooltipMakerAPI> {
 
-    public MyTooltip(float w, float h, boolean withScroller, MyPanel parent) {
-        super(parent.u.createUIElement(w, h, withScroller));
-        parent.addUIElement(this);
+    public MyTooltip(float w, float h, boolean withScroller, MyPanel _parent) {
+        super(_parent.u.createUIElement(w, h, withScroller));
+        _parent.addUIElement(this);
+        this.parent = _parent;
     }
 
     public MyTooltip(float w, float h, boolean withScroller, CustomPanelAPI parent) {

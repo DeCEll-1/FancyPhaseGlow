@@ -1,10 +1,12 @@
 package DeCell.FPG.Frontend.Backend;
 
 import DeCell.FPG.Frontend.Backend.Components.MyButton;
+import DeCell.FPG.Frontend.Backend.Components.MyTooltip;
 import com.fs.starfarer.api.input.InputEventAPI;
 import com.fs.starfarer.api.ui.PositionAPI;
 import com.fs.starfarer.api.ui.UIComponentAPI;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.util.vector.Vector2f;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -23,6 +25,14 @@ public abstract class UIElement<T extends UIElement<T, U>, U extends UIComponent
     protected boolean isDragging = false;
 
     protected boolean wasHovered = false;
+    protected boolean markedForDeletion = false;
+
+
+    protected UIContainer<?, ?> parent;
+
+    public <P extends UIContainer<?, ?>> P getParent() {
+        return (P) parent;
+    }
 
     protected Dictionary<String, Object> internalData = new Hashtable<>();
 
@@ -43,6 +53,14 @@ public abstract class UIElement<T extends UIElement<T, U>, U extends UIComponent
 
     public UIElement(U underlying) {
         this.u = underlying;
+    }
+
+    public void markForDeletion() {
+        this.markedForDeletion = true;
+    }
+
+    public boolean isMarkedForDeletion() {
+        return this.markedForDeletion;
     }
 
     public void processInput(List<InputEventAPI> events) {
@@ -86,7 +104,6 @@ public abstract class UIElement<T extends UIElement<T, U>, U extends UIComponent
         wasClickedLastFrame = isLeftMouseDown;
         wasHovered = isMouseOver;
     }
-
 
     public boolean isDragging() {
         return isDragging;
@@ -220,6 +237,30 @@ public abstract class UIElement<T extends UIElement<T, U>, U extends UIComponent
         getPosition().inLMid(xPad);
         return (T) this;
     }
+
+    //#region Vector2f
+
+    public T inTL(Vector2f pad) {
+        getPosition().inTL(pad.x, pad.y);
+        return (T) this;
+    }
+
+    public T inTR(Vector2f pad) {
+        getPosition().inTR(pad.x, pad.y);
+        return (T) this;
+    }
+
+    public T inBR(Vector2f pad) {
+        getPosition().inBR(pad.x, pad.y);
+        return (T) this;
+    }
+
+    public T inBL(Vector2f pad) {
+        getPosition().inBL(pad.x, pad.y);
+        return (T) this;
+    }
+
+    //#endregion
 
     //#endregion
 

@@ -27,26 +27,29 @@ public class DialougeButtonPanel extends UIContainer<DialougeButtonPanel, Custom
     private MyPanel container;
     private boolean isOpen = false;
 
-    public DialougeButtonPanel(float w, float h, MyButton _1, CharlieElement parent) {
-        super(parent.u.createCustomPanel(w, h, null));
-        parent.addOpenable(this);
-        parent.addElement(this);
+    public DialougeButtonPanel(float w, float h, MyButton _button, CharlieElement _parent) {
+        super(_parent.u.createCustomPanel(w, h, null));
+        _parent.addOpenable(this);
+        _parent.addElement(this);
+        this.parent = _parent;
 
-        this.button = _1;
+        this.button = _button;
         this.button.setOnMouseDown(this::click);
     }
 
-    public DialougeButtonPanel(float w, float h, MyButton _1, MyPanel parent) {
-        super(parent.u.createCustomPanel(w, h, null));
-        parent.addComponent(this.u);
-        parent.addElement(this);
+    public DialougeButtonPanel(float w, float h, MyButton _button, MyPanel _parent) {
+        super(_parent.u.createCustomPanel(w, h, null));
+        _parent.addComponent(this.u);
+        _parent.addElement(this);
+        this.parent = _parent;
 
-        this.button = _1;
+        this.button = _button;
         this.button.setOnMouseDown(this::click);
     }
 
 
     private void createContainer() {
+        activeUIElements.clear();
         this.container = new MyPanel(this.w(), this.h(), new MultiPluginHandler() // main window
                 .add(new RenderableHandlerPlugin()
                         .addBelow(

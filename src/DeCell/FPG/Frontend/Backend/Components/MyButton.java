@@ -17,37 +17,31 @@ import java.util.function.Consumer;
 
 public class MyButton extends UIElement<MyButton, ButtonAPI> {
 
-    public MyButton(String text, float width, float height, float pad, MyTooltip parent) {
-        super(parent.addButton(text, null, width, height, pad));
-        parent.addElement(this);
-        this.parent = parent;
+    public MyButton(String text, float width, float height, float pad, MyTooltip _parent) {
+        super(_parent.addButton(text, null, width, height, pad));
+        _parent.addElement(this);
+        this.parent = _parent;
     }
 
     public MyButton(String text, Color base, Color bg,
-                    float width, float height, float pad, MyTooltip parent) {
-        super(parent.addButton(text, null, base, bg, width, height, pad));
-        parent.addElement(this);
-        this.parent = parent;
+                    float width, float height, float pad, MyTooltip _parent) {
+        super(_parent.addButton(text, null, base, bg, width, height, pad));
+        _parent.addElement(this);
+        this.parent = _parent;
     }
 
     public MyButton(String text, Color base, Color bg,
                     Alignment align, CutStyle style,
-                    float width, float height, float pad, MyTooltip parent) {
-        super(parent.addButton(text, null, base, bg, align, style, width, height, pad));
-        parent.addElement(this);
-        this.parent = parent;
+                    float width, float height, float pad, MyTooltip _parent) {
+        super(_parent.addButton(text, null, base, bg, align, style, width, height, pad));
+        _parent.addElement(this);
+        this.parent = _parent;
     }
 
     public MyButton(String text, Alignment align, CutStyle style,
                     float width, float height, float pad, MyTooltip parent) {
         this(text, Misc.getButtonTextColor(), Misc.getDarkPlayerColor(),
                 align, style, width, height, pad, parent);
-    }
-
-    protected MyTooltip parent;
-
-    public MyTooltip getParent() {
-        return parent;
     }
 
     public boolean wasClickedLastFrame() {
@@ -208,16 +202,6 @@ public class MyButton extends UIElement<MyButton, ButtonAPI> {
 
         public Builder(String text, MyPanel parent) {
             this(text, 0, 0, parent);
-        }
-
-        public Builder(String text, float width, float height) {
-            this.text = text;
-            this.w = width;
-            this.h = height;
-        }
-
-        public Builder(String text) {
-            this(text, 0, 0);
         }
 
         public Builder setParent(MyPanel panel) {

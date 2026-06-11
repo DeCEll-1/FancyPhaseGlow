@@ -20,29 +20,28 @@ import static DeCell.FPG.Reflections.invokeMethod;
 
 public class MyTextBox extends UIContainer<MyTextBox, TextFieldAPI> {
     //#region constants
-    private static final float defaultHeight = 28f;
-    private static final String defaultFont = "graphics/fonts/insignia21LTaa.fnt";
+    public static final float defaultHeight = 28f;
+    public static final String defaultFont = "graphics/fonts/insignia21LTaa.fnt";
     //#endregion
 
-    public MyTextBox(float w, float pad, MyTooltip parent) {
-        super(parent.addTextField(w, pad));
-        parent.addElement(this);
-        this.parent = parent;
+    public MyTextBox(float w, float pad, MyTooltip _parent) {
+        super(_parent.addTextField(w, pad));
+        _parent.addElement(this);
+        this.parent = _parent;
     }
 
-    public MyTextBox(float w, String font, float pad, MyTooltip parent) {
-        super(parent.addTextField(w, font, pad));
-        parent.addElement(this);
-        this.parent = parent;
+    public MyTextBox(float w, String font, float pad, MyTooltip _parent) {
+        super(_parent.addTextField(w, font, pad));
+        _parent.addElement(this);
+        this.parent = _parent;
     }
 
-    public MyTextBox(float w, float h, String font, float pad, MyTooltip parent) {
-        super(parent.addTextField(w, h, font, pad));
-        parent.addElement(this);
-        this.parent = parent;
+    public MyTextBox(float w, float h, String font, float pad, MyTooltip _parent) {
+        super(_parent.addTextField(w, h, font, pad));
+        _parent.addElement(this);
+        this.parent = _parent;
     }
 
-    protected MyTooltip parent;
     protected boolean hadFocusLastFrame = false;
     protected String textLastFrame = "";
 
@@ -132,6 +131,7 @@ public class MyTextBox extends UIContainer<MyTextBox, TextFieldAPI> {
         invokeMethod("setMinimalMode", this.u, new Class[]{boolean.class}, isMinimal);
         return this;
     }
+
     public MyTextBox setPad(float pad) {
         this.u.setPad(pad);
         return this;

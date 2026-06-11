@@ -14,25 +14,26 @@ public class MyPanel extends UIContainer<MyPanel, CustomPanelAPI> {
     PanelPlugin plugin;
 
     //#region constructors
-    public MyPanel(float w, float h, PanelPlugin p, MyPanel parent, boolean init) {
-        super(parent.u.createCustomPanel(w, h, p));
+    public MyPanel(float w, float h, PanelPlugin p, MyPanel _parent, boolean init) {
+        super(_parent.u.createCustomPanel(w, h, p));
         this.plugin = p;
         if (init) initPlugin();
-        parent.addComponent(this);
+        _parent.addComponent(this);
+        this.parent = _parent;
     }
 
-    public MyPanel(float w, float h, PanelPlugin p, CustomPanelAPI parent, boolean init) {
-        super(parent.createCustomPanel(w, h, p));
+    public MyPanel(float w, float h, PanelPlugin p, CustomPanelAPI _parent, boolean init) {
+        super(_parent.createCustomPanel(w, h, p));
         this.plugin = p;
         if (init) initPlugin();
-        parent.addComponent(u);
+        _parent.addComponent(u);
     }
 
-    public MyPanel(float w, float h, PanelPlugin p, UIPanelAPI parent, boolean init) {
+    public MyPanel(float w, float h, PanelPlugin p, UIPanelAPI _parent, boolean init) {
         super(Global.getSettings().createCustom(w, h, p));
         this.plugin = p;
         if (init) initPlugin();
-        parent.addComponent(u);
+        _parent.addComponent(u);
     }
 
     public MyPanel(float w, float h, PanelPlugin p, MyPanel parent) {

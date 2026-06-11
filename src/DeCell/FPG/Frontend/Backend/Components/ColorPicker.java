@@ -41,6 +41,7 @@ public class ColorPicker extends UIContainer<ColorPicker, UIComponentAPI> {
     public ColorPicker(MyPanel container, MyPanel colorPreview, Slider rSlider, Slider gSlider, Slider bSlider, Slider aSlider) {
         super(container.u);
         container.addElement(this);
+        this.parent = container;
         previewRenderer = new MonoColorRenderable(new Color(0x000000));
         colorPreview.<RenderableHandlerPlugin>getPlugin().addBelow(previewRenderer);
 

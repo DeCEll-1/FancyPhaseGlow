@@ -1,5 +1,6 @@
 package DeCell.FPG.Frontend.Backend;
 
+import DeCell.FPG.Frontend.Backend.Components.MyPanel;
 import com.fs.starfarer.api.input.InputEventAPI;
 import com.fs.starfarer.api.ui.UIComponentAPI;
 
@@ -28,9 +29,14 @@ public abstract class UIContainer<T extends UIElement<T, U>, U extends UICompone
 
     @Override
     public void advance(float amount) {
-        for (UIElement<?, ?> element : activeUIElements) {
+        List<UIElement<?, ?>> tempList = new ArrayList<>(activeUIElements);
+
+        for (UIElement<?, ?> element : tempList)
+            if (element.isMarkedForDeletion())
+                activeUIElements.remove(element);
+
+        for (UIElement<?, ?> element : activeUIElements)
             element.advance(amount);
-        }
 
         if (!UIElements.isEmpty()) {
             activeUIElements.addAll(UIElements);
@@ -54,4 +60,19 @@ public abstract class UIContainer<T extends UIElement<T, U>, U extends UICompone
 
         return super.update();
     }
+
+
+    public boolean tryRemoveComponent(UIElement<?, ?> comp) {
+
+        try {
+            ((MyPanel) this).u.removeComponent(comp.u);
+            comp.markForDeletion();
+        } catch (Exception e) {
+            return false;
+        }
+
+
+        return true;
+    }
+
 }

@@ -15,10 +15,11 @@ public class CharlieElement extends UIContainer<CharlieElement, CustomPanelAPI> 
     private final MonoColorRenderable background = new MonoColorRenderable(new Color(0x9A000000, true));
     private MultiPluginHandler plugin;
 
-    public CharlieElement(MyPanel parent) {
-        super(parent.u.createCustomPanel(parent.w(), parent.h(), new MultiPluginHandler()));
-        parent.addComponent(this.u).inBL(0, 0);
-        parent.addElement(this);
+    public CharlieElement(MyPanel _parent) {
+        super(_parent.u.createCustomPanel(_parent.w(), _parent.h(), new MultiPluginHandler()));
+        _parent.addComponent(this.u).inBL(0, 0);
+        _parent.addElement(this);
+        this.parent = _parent;
 
         this.plugin = ((MultiPluginHandler) this.u.getPlugin());
         this.plugin.add(new RenderableHandlerPlugin().addBelow(background));

@@ -51,13 +51,11 @@ public class MainRefitPanelPlugin extends PanelPlugin {
                             .position((item, builder) -> item.inBR(16, 4))
                             .build().inMid();
 
-                    new MyCombobox.Builder(
-                            190, 25,
-                            new MyButton.Builder("Select Element")
-                                    .setStyle(Alignment.MID, CutStyle.TOP),
-                            panel
-                    ).position((item, builder) -> item.inTL(26, 30))
-                            .build()
+                    MyCombobox.Builder.build(
+                                    190, 25,
+                                    "Select Element",
+                                    panel
+                            ).inTL(26, 30)
                             .addItem(new ComboboxElement("balls"))
                             .addItem(new ComboboxElement("balls2"))
                             .addItem(new ComboboxElement("balls3"))
@@ -67,18 +65,24 @@ public class MainRefitPanelPlugin extends PanelPlugin {
                     ;
 
 
-                    new ColorPicker.Builder().withAlpha().build(panel).inBL(20, 20)
+                    ColorPicker chud = new ColorPicker.Builder().withAlpha().build(panel).inBL(20, 20)
                             .addToInternalData(pair("debug_btn", debugButton))
                             .setOnColorChange(s -> {
                                 MyButton dbgButton = s.getFromInternal("debug_btn");
                                 dbgButton.setText(s.getColor().toString());
                             });
 
-                    new MyTextBox.Builder(160, panel)
-                            .position((item, builder) -> item.inTR(26, 30)).build()
+                    MyTextBox testTB = new MyTextBox.Builder(160, panel)
+                            .position((item, builder) -> item.inTR(50, 50)).build()
                             .addToInternalData(pair("debug_btn", debugButton))
                             .setOnTextChange(s -> s.<MyButton>getFromInternal("debug_btn").setText(s.getText()))
                             .setMaxChars(50).setValidationRegex(FancyPhaseGlow.Patterns.DECIMAL_ONLY);
+
+                    new NumericUpDown.Builder().build(200, panel)
+//                            .belowMid(testTB.u, 2)
+                            .belowRight(testTB.getParent().u, 2)
+//                            .inTR(80, 80)
+                    ;
 
 
                 });
