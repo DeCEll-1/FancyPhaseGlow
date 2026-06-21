@@ -14,6 +14,9 @@ public abstract class UIContainer<T extends UIElement<T, U>, U extends UICompone
     protected final List<UIElement<?, ?>> activeUIElements = new ArrayList<>();
     protected final List<UIElement<?, ?>> UIElements = new ArrayList<>();
 
+    public List<UIElement<?, ?>> getUIElements() {
+        return UIElements;
+    }
 
     public UIContainer(U u) {
         super(u);
@@ -37,11 +40,16 @@ public abstract class UIContainer<T extends UIElement<T, U>, U extends UICompone
         List<UIElement<?, ?>> tempList = new ArrayList<>(activeUIElements);
 
         for (UIElement<?, ?> element : tempList)
-            if (element.isMarkedForDeletion())
+            if (element.isMarkedForDeletion()) {
                 activeUIElements.remove(element);
+            }
 
-        for (UIElement<?, ?> element : activeUIElements)
+        for (UIElement<?, ?> element : activeUIElements) {
             element.advance(amount);
+            if (this.isMarkedForDeletion())
+                element.markForDeletion();
+        }
+
 
         if (!UIElements.isEmpty()) {
             activeUIElements.addAll(0, UIElements);

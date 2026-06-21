@@ -43,7 +43,8 @@
                 {
                     "Name": "numColors",
                     "Type": "int",
-                    "Value": 3
+                    "Value": 3,
+                    "Modifyable": true
                 },
                 {
                     "Name": "texWidth",

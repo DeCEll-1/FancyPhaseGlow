@@ -1,18 +1,28 @@
 package DeCell.FPG.JavaSlop.ShaderJsonParsing;
 
-import DeCell.FPG.Shader;
+import DeCell.FPG.Frontend.Backend.Components.ColorPicker.ColorPickerV2;
+import DeCell.FPG.Frontend.Backend.Components.Dialogues.ColorPickerV2Dialogue;
+import DeCell.FPG.Frontend.Backend.Components.DialougeButtonPanel;
+import DeCell.FPG.Frontend.Backend.Components.MyButton;
+import DeCell.FPG.Frontend.Backend.Components.MyPanel;
+import DeCell.FPG.Frontend.Backend.Components.NumericUpDown;
+import DeCell.FPG.Frontend.Backend.DataPair;
+import DeCell.FPG.Frontend.Backend.UIElement;
 import DeCell.FPG.ShaderUniformManager;
 import com.fs.graphics.Sprite;
-import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.combat.ShipAPI;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.lwjgl.opengl.GL13;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import java.awt.*;
+import java.util.List;
 import java.util.Objects;
+
+import static DeCell.FPG.Frontend.Backend.DataPair.pair;
 
 public class ShaderUniformModel {
     public String name;
@@ -67,6 +77,66 @@ public class ShaderUniformModel {
 
         } catch (JSONException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public MyPanel createUniformModal(MyPanel parent) {
+        MyPanel container = new MyPanel.Builder(280, 80).build(parent);
+
+        Vector2f modalSize = new Vector2f(20, 20);
+
+        MyButton openerButton = new MyButton.Builder("Edit", 60, 24, container).build().inBR(2, 2);
+
+        switch (this.type) {
+            case INT, FLOAT -> modalSize = new Vector2f(280, 20);
+            case VEC3 -> modalSize = new Vector2f(280, 180);
+        }
+
+        if (this.type == UniformType.COL3) {
+            new ColorPickerV2Dialogue().popup(
+                    openerButton,
+                    parent.getUIElements(),
+                    colorPickerV2 -> colorPickerV2.
+                            <MyPanel>getFromInternal("master")
+                            .addToInternalData(this.name, colorPickerV2.getColor()),
+                    pair("master", parent)
+            );
+            return container;
+        }
+
+
+        DialougeButtonPanel modal = new DialougeButtonPanel.Builder(modalSize.x, modalSize.y, openerButton)
+                .withCharlie().build(parent.getUIElements())
+                .addToInternalData("master", parent)
+                .addToInternalData("uniform", this)
+                .setOnUIOpen(ShaderUniformModel::onModalOpen);
+
+        return container;
+    }
+
+    private static void onModalOpen(MyPanel parent, DialougeButtonPanel modal, List<UIElement<?, ?>> IUElements) {
+        MyPanel master = modal.getFromInternal("master");
+        ShaderUniformModel uniform = modal.getFromInternal("uniform");
+
+        switch (uniform.type) {
+            case INT, FLOAT -> {
+                NumericUpDown nud = new NumericUpDown.Builder().build(200, parent).inLMid(0);
+                new MyButton.Builder("Accept", 80, 20, parent).build().inRMid(0)
+                        .addToInternalData("nud", nud)
+                        .addToInternalData("master", master)
+                        .addToInternalData("uniform", uniform)
+                        .setOnMouseDown(btn -> {
+                            double val = btn.<NumericUpDown>getFromInternal("nud").getValue();
+                            btn.<MyPanel>getFromInternal("master")
+                                    .addToInternalData(
+                                            btn.<ShaderUniformModel>getFromInternal("uniform").name,
+                                            val
+                                    );
+                        });
+            }
+            case COL3_ARRAY -> { // TODO: uhhhh make a scrollbar
+
+            }
         }
     }
 
