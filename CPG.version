@@ -1,6 +1,7 @@
 {
-    "masterVersionFile": "https://github.com/DeCEll-1/CustomizablePhaseGlow/CPG.version",
-    "modName": "Industrial.Evolution",
+    "masterVersionFile": "https://raw.githubusercontent.com/DeCEll-1/CustomizablePhaseGlow/refs/heads/master/CPG.version",
+    "directDownloadURL": "https://github.com/DeCEll-1/CustomizablePhaseGlow/releases/latest/download/CPG.zip"
+    "modName": "CustomizablePhaseGlow",
     "modThreadId": 18011,
     "modVersion": {
         "major": 1,

@@ -1,0 +1,1 @@
+dotnet script "./createRelaseZip.csx"
