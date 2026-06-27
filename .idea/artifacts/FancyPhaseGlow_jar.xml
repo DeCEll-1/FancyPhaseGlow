@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="FancyPhaseGlow:jar">
-    <output-path>$PROJECT_DIR$/jars</output-path>
-    <root id="archive" name="FPG.jar">
-      <element id="module-output" name="FancyPhaseGlow" />
-    </root>
-  </artifact>
-</component>
