@@ -2,8 +2,7 @@
 | Filename | line # | TODO |
 |:------|:------:|:------|
 | [src/DeCell/CPG/Frontend/MainRefitPanelPlugin.java](src/DeCell/CPG/Frontend/MainRefitPanelPlugin.java#L37) | 37 | implement a preview section here |
-| [src/DeCell/CPG/Hullmods/NoPhaseGlow.java](src/DeCell/CPG/Hullmods/NoPhaseGlow.java#L72) | 72 | use unobfuscated names |
-| [src/DeCell/CPG/Hullmods/NoPhaseGlow.java](src/DeCell/CPG/Hullmods/NoPhaseGlow.java#L83) | 83 | figure out *some* way to fix this lambda variable bs that java haves |
+| [src/DeCell/CPG/Hullmods/NoPhaseGlow.java](src/DeCell/CPG/Hullmods/NoPhaseGlow.java#L82) | 82 | figure out *some* way to fix this lambda variable bs that java haves |
 | [src/DeCell/CPG/JavaSlop/ShaderJsonParsing/ShaderUniformModel.java](src/DeCell/CPG/JavaSlop/ShaderJsonParsing/ShaderUniformModel.java#L357) | 357 | implement custom textures |
 | [src/DeCell/CPG/Frontend/Backend/Components/DialougeButtonPanel.java](src/DeCell/CPG/Frontend/Backend/Components/DialougeButtonPanel.java#L69) | 69 | make these more modifyable |
 | [src/DeCell/CPG/Frontend/Backend/Components/NumericUpDown.java](src/DeCell/CPG/Frontend/Backend/Components/NumericUpDown.java#L26) | 26 | allow users to hold down left click on the buttons for changing the value |
