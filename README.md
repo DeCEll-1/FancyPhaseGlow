@@ -3,7 +3,9 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE) [![wakatime](https://wakatime.com/badge/user/031e2989-d7de-482e-b163-53be0a26f8aa/project/7632ba4e-bd52-4f03-8db7-52bf177f8ea2.svg)](https://wakatime.com/badge/user/031e2989-d7de-482e-b163-53be0a26f8aa/project/7632ba4e-bd52-4f03-8db7-52bf177f8ea2)
 [![trios](https://trilink.wispborne.com/badges/install-badge-forthebadge.svg)](https://trilink.wispborne.com/open.html?mod=%7B%22url%22%3A%22https%3A%2F%2Fraw.githubusercontent.com%2FDeCEll-1%2FCustomizablePhaseGlow%2Frefs%2Fheads%2Fmaster%2FCPG.version%22%2C%22id%22%3A%22CustomizablePhaseGlow%22%2C%22version%22%3A%221.0.0%22%7D)
 
-Customizable Phase Glow (CPG) is a small Starsector mod that lets you change and customize the "phase glow" visual effects on phase-capable ships. It adds an in-game UI in the refit screen so you can pick from multiple glow presets and tweak visual parameters per-ship - no coding or shader knowledge required for evyday use.
+Customizable Phase Glow (CPG) is a small mod that lets you change and customize the phase glow effects on phase ships. It adds an in-game UI in the refit screen so you can pick from multiple glow presets and tweak visual parameters per-ship
+
+See forum post for detailed information: TODO
 
 ## Installation
 
