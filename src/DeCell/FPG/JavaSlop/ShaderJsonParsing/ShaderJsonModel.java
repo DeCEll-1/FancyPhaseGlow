@@ -19,6 +19,19 @@ public class ShaderJsonModel {
     public String vertexShaderPath; //?
     public List<ShaderUniformModel> uniforms;
     private Shader shader;
+    // what this is is, its jank, i needed the phae alpha mult as a customisable variable and the easiest way to do that is by putting
+    // it as a uniform
+    public static final String phaseAlphaMultKeyword = "_phasecoil_alpha_mult";
+    private String alphaUniformJson = "\n" +
+            "                {\n" +
+            "                    \"Name\": \"" + phaseAlphaMultKeyword + "\",\n" +
+            "                    \"Type\": \"float\",\n" +
+            "                    \"Value\": 1,\n" +
+            "                    \"Modifyable\": true,\n" +
+            "                    \"Min\": 0,\n" +
+            "                    \"Max\": 1,\n" +
+            "                    \"StepSize\": 0.05\n" +
+            "                },";
 
     public ShaderJsonModel(JSONObject jsonObject) {
         try {
@@ -30,11 +43,14 @@ public class ShaderJsonModel {
 
             this.uniforms = new ArrayList<>();
             if (jsonObject.has("Uniforms")) {
+                this.uniforms.add(new ShaderUniformModel(new JSONObject(alphaUniformJson)));
                 JSONArray uniformsArray = jsonObject.getJSONArray("Uniforms");
                 for (int i = 0; i < uniformsArray.length(); i++) {
                     this.uniforms.add(new ShaderUniformModel(uniformsArray.getJSONObject(i)));
                 }
             }
+
+
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
@@ -60,6 +76,24 @@ public class ShaderJsonModel {
 
     public void updateUniformValues(ShipAPI ship, Sprite sprite) {
         for (ShaderUniformModel uniform : uniforms) {
+            if (uniform.valueType == ShaderUniformModel.ValueType.ARRAY_LENGTH) {
+                Object targetArrayData = FancyPhaseGlow.getShipProperty(ship, uniform.arrayLengthReferenceTarget);
+
+                if (targetArrayData != null) {
+                    int length = 0;
+
+                    if (targetArrayData instanceof float[][] multiDimArray) {
+                        length = multiDimArray.length;
+                    } else if (targetArrayData instanceof float[] singleDimArray) {
+                        length = singleDimArray.length;
+                    } else if (targetArrayData instanceof Object[] objArray) {
+                        length = objArray.length;
+                    }
+
+                    FancyPhaseGlow.setShipProperty(ship, "arrLen_" + uniform.name, length, false);
+                }
+            }
+
             uniform.update(shader.getUniformManager(), ship, sprite);
         }
     }

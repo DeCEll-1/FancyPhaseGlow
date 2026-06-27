@@ -2,12 +2,12 @@ package DeCell.FPG.Frontend.Backend.Renderable;
 
 import DeCell.FPG.FancyPhaseGlow;
 import DeCell.FPG.Frontend.Backend.Plugins.PanelPlugin;
+import DeCell.FPG.Frontend.Backend.UIContainer;
+import DeCell.FPG.Misc;
 import com.fs.starfarer.api.ui.CustomPanelAPI;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class RenderableHandlerPlugin extends PanelPlugin {
     private List<PluginRenderable> renderBelows = new ArrayList<>();
@@ -17,9 +17,7 @@ public class RenderableHandlerPlugin extends PanelPlugin {
     public RenderableHandlerPlugin() {
         if (FancyPhaseGlow.DebugUI)
             this.debugRenderable.add(new MonoColorRenderable(
-                    new Color(
-                            (new Random().nextInt() & 0x00FFFFFF) | (0x55 << 24)
-                            , true)));
+                    Misc.getRandomColor()));
     }
 
     public RenderableHandlerPlugin addBelow(PluginRenderable _0) {
@@ -49,7 +47,7 @@ public class RenderableHandlerPlugin extends PanelPlugin {
     }
 
     @Override
-    public void init(CustomPanelAPI parent) {
+    public void init(UIContainer<?, CustomPanelAPI> parent) {
         for (PluginRenderable $_ : renderBelows) {
             $_.init(parent);
         }
@@ -64,7 +62,7 @@ public class RenderableHandlerPlugin extends PanelPlugin {
     }
 
     @Override
-    public void update(CustomPanelAPI parent) {
+    public void update(UIContainer<?, CustomPanelAPI> parent) {
         for (PluginRenderable $_ : renderBelows) {
             $_.update(parent);
         }

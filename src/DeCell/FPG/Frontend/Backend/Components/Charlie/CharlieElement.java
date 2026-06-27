@@ -31,7 +31,7 @@ public class CharlieElement extends UIContainer<CharlieElement, CustomPanelAPI> 
         this.plugin.add(renderHandler);
         if (!FancyPhaseGlow.DebugUIHighlightCharlie)
             renderHandler.cleanDebugRenderables();
-        this.plugin.update(this.u);
+        this.plugin.update(this);
 
         this.update();
 

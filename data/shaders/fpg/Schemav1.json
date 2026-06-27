@@ -90,6 +90,14 @@
                                                     "type": "number"
                                                 }
                                             }
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "arrayLengthOf": { "type": "string" }
+                                            },
+                                            "required": [ "arrayLengthOf" ],
+                                            "additionalProperties": false
                                         }
                                     ]
                                 },
@@ -98,6 +106,14 @@
                                     "default": false
                                 },
                                 "StepSize": {
+                                    "type": "number",
+                                    "default": 1.0
+                                },
+                                "Min": {
+                                    "type": "number",
+                                    "default": 0
+                                },
+                                "Max": {
                                     "type": "number",
                                     "default": 1.0
                                 }

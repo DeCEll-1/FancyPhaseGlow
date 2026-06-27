@@ -36,7 +36,8 @@ public class FancyPhaseGlow {
             persistentData.put(key, new HashMap<String, Object>());
         }
 
-        return (Map<String, Object>) persistentData.get(key);
+        Map<String, Object> data = (Map<String, Object>) persistentData.get(key);
+        return data;
     }
 
     public static ShaderJsonModel getShaderForShip(ShipAPI ship) {
@@ -57,9 +58,13 @@ public class FancyPhaseGlow {
     }
 
     public static void setShipProperty(ShipAPI ship, String name, Object val) {
+        setShipProperty(ship, name, val, true);
+    }
+
+    public static void setShipProperty(ShipAPI ship, String name, Object val, boolean log) {
         getShipDataMap(ship).put(name, val);
-        if (Debug)
-            Log("Updated property of " + getKeyFromShip(ship) + " with " + val);
+        if (Debug && log)
+            Log("Updated property of " + getKeyFromShip(ship) + " with " + val + " for " + name);
     }
 
     public static <T> T getShipProperty(ShipAPI ship, String name) {
@@ -69,12 +74,10 @@ public class FancyPhaseGlow {
             setShipProperty(ship, name, prop);
         }
 
-
-        if (Debug)
-            Log("Got ship property of " + getKeyFromShip(ship) + " with " + prop);
+//        if (Debug)
+//            Log("Got ship property of " + getKeyFromShip(ship) + " with " + prop);
 
         return (T) prop;
-
     }
 
     public static void Log(String s) {
@@ -103,7 +106,7 @@ public class FancyPhaseGlow {
                     try {
                         modJson = Global.getSettings().loadText("data/shaders/fpg/PhaseShaders.json", modSpecAPI.getId());
                         // when life gives you bad apis you try and catch
-                    } catch (Exception e) { continue; }
+                    } catch (Exception e) {continue;}
                     // yes this regex is bad for sanitising properly as it does not take into account the slashes in strings,
                     // however for the purposes of this it does not matter
                     String sanitizedJson = modJson.replaceAll("//.*", "");

@@ -1,5 +1,6 @@
 package DeCell.FPG.Frontend.Backend.Plugins;
 
+import DeCell.FPG.Frontend.Backend.UIContainer;
 import com.fs.starfarer.api.input.InputEventAPI;
 import com.fs.starfarer.api.ui.CustomPanelAPI;
 import com.fs.starfarer.api.ui.PositionAPI;
@@ -20,14 +21,14 @@ public class MultiPluginHandler extends PanelPlugin {
 
     // --- CustomPanelAPI specific methods ---
     @Override
-    public void init(CustomPanelAPI parent) {
+    public void init(UIContainer<?, CustomPanelAPI> parent) {
         for (PanelPlugin plugin : plugins) {
             plugin.init(parent);
         }
     }
 
     @Override
-    public void update(CustomPanelAPI parent) {
+    public void update(UIContainer<?, CustomPanelAPI> parent) {
         for (PanelPlugin plugin : plugins) {
             plugin.update(parent);
         }

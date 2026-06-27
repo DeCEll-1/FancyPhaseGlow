@@ -32,7 +32,7 @@ public class CustomBanel implements EveryFrameScript {
         UIPanelAPI refitTab = (UIPanelAPI) getCurrentTab();
         U refitPanel = getRefitPanel();
         Ship ship = refitPanel.getShipDisplay().getShip();
-        boolean isPhaseShip = ship.getVariant().hasHullMod("phasefield");
+        boolean isPhaseShip = ship.getHullSpec().isPhase();
         String tmpShipID = ship.getId();
         if (!isPhaseShip || !Objects.equals(tmpShipID, shipID)) {
             if (customPanel != null)

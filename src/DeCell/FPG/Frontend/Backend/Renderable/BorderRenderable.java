@@ -1,6 +1,8 @@
 package DeCell.FPG.Frontend.Backend.Renderable;
 
 import DeCell.FPG.Frontend.Backend.Rect;
+import DeCell.FPG.Frontend.Backend.UIContainer;
+import DeCell.FPG.Frontend.Backend.UIElement;
 import com.fs.starfarer.api.graphics.SpriteAPI;
 import com.fs.starfarer.api.ui.CustomPanelAPI;
 
@@ -58,12 +60,12 @@ public class BorderRenderable extends PluginRenderable {
     }
 
     @Override
-    public void init(CustomPanelAPI parent) {
+    public void init(UIContainer<? extends UIElement<?, CustomPanelAPI>, CustomPanelAPI> parent) {
         super.init(parent);
     }
 
     @Override
-    public void update(CustomPanelAPI parent) {
+    public void update(UIContainer<? extends UIElement<?, CustomPanelAPI>, CustomPanelAPI> parent) {
         super.update(parent);
     }
 

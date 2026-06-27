@@ -1,6 +1,6 @@
 {
     "$schema": "./Schemav1.json",
-    "Shaders": [ // gotta use //s for comments here because as much as hjson allows // for comments the game doesnt
+    "Shaders": [
         {
             "ID": "fpg_radial",
             "Title": "Radial",
@@ -22,29 +22,36 @@
                     "Name": "armCount",
                     "Type": "int",
                     "Value": 9,
-                    "Modifyable": true
+                    "Modifyable": true,
+                    "StepSize": 1,
+                    "Min": 0,
+                    "Max": 30
                 },
                 {
                     "Name": "speed",
                     "Type": "float",
+                    "Modifyable": true,
                     "Value": 0.25,
-                    "Modifyable": true
+                    "StepSize": 0.05,
+                    "Min": -4,
+                    "Max": 4
                 },
                 {
                     "Name": "colors",
                     "Type": "col3[]",
+                    "Modifyable": true,
                     "Value": [ // hex wouldve been a LOT better tbh but whatever
                         [ 0, 255, 255 ],
                         [ 255, 0, 255 ],
                         [ 255, 255, 0 ]
                     ],
-                    "Modifyable": true
+                    "Min": 1,
+                    "Max": 16
                 },
                 {
                     "Name": "numColors",
                     "Type": "int",
-                    "Value": 3,
-                    "Modifyable": true
+                    "Value": { "arrayLengthOf": "colors" }
                 },
                 {
                     "Name": "texWidth",

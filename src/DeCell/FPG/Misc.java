@@ -1,11 +1,13 @@
 package DeCell.FPG;
 
+import com.fs.starfarer.api.Global;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
 
 import java.awt.Color;
 import java.util.List;
+import java.util.Random;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -26,4 +28,39 @@ public class Misc {
     public static double clamp(double value, double min, double max) {
         return Math.max(min, Math.min(value, max));
     }
+
+    public static Color getRandomColor(int alpha) {
+        return new Color(
+                (new Random().nextInt() & 0x00FFFFFF) | (0x55 << 24)
+                , true);
+    }
+
+    public static Color getRandomColor() {
+        return getRandomColor(0x55);
+    }
+
+    public static Color negativeColor(Color c) {
+        return new Color(255 - c.getRed(), 255 - c.getGreen(), 255 - c.getBlue());
+    }
+
+    public static Color getBrightPlayerColor() {
+        return Global.getSector().getPlayerFaction().getBrightUIColor();
+    }
+
+    public static Color getBasePlayerColor() {
+        return Global.getSector().getPlayerFaction().getBaseUIColor();
+    }
+
+    public static Color getDarkPlayerColor() {
+        return Global.getSector().getPlayerFaction().getDarkUIColor();
+    }
+
+    public static Color getTextColor() {
+        return Global.getSettings().getColor("standardTextColor");
+    }
+
+    public static Color getButtonTextColor() {
+        return Global.getSettings().getColor("buttonText");
+    }
+
 }

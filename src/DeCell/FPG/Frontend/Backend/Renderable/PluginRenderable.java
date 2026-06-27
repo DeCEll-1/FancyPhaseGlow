@@ -1,6 +1,8 @@
 package DeCell.FPG.Frontend.Backend.Renderable;
 
 import DeCell.FPG.Frontend.Backend.Rect;
+import DeCell.FPG.Frontend.Backend.UIContainer;
+import DeCell.FPG.Frontend.Backend.UIElement;
 import com.fs.starfarer.api.ui.CustomPanelAPI;
 import com.fs.starfarer.api.ui.PositionAPI;
 
@@ -12,7 +14,7 @@ public abstract class PluginRenderable {
         zone = new Rect(p.getX(), p.getY(), p.getWidth(), p.getHeight());
     }
 
-    public void init(CustomPanelAPI parent) {
+    public void init(UIContainer<? extends UIElement<?, CustomPanelAPI>, CustomPanelAPI> parent) {
         PositionAPI p = parent.getPosition();
         zone = new Rect(-1f, -1f, p.getWidth(), p.getHeight());
     }
@@ -23,7 +25,7 @@ public abstract class PluginRenderable {
         return zone.x == -1f && zone.y == -1f;
     }
 
-    public void update(CustomPanelAPI parent) {
+    public void update(UIContainer<? extends UIElement<?, CustomPanelAPI>, CustomPanelAPI> parent) {
         updateZone(parent.getPosition());
     }
 

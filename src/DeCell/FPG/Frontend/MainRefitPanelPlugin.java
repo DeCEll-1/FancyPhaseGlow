@@ -6,10 +6,12 @@ import DeCell.FPG.Frontend.Backend.Components.*;
 import DeCell.FPG.Frontend.Backend.Components.Combobox.ComboboxElement;
 import DeCell.FPG.Frontend.Backend.Components.Combobox.MyCombobox;
 import DeCell.FPG.Frontend.Backend.Plugins.PanelPlugin;
+import DeCell.FPG.Frontend.Backend.Renderable.BorderRenderable;
 import DeCell.FPG.Frontend.Backend.Renderable.RenderableHandlerPlugin;
 import DeCell.FPG.JavaSlop.ShaderJsonParsing.ShaderJsonModel;
 import DeCell.FPG.JavaSlop.ShaderJsonParsing.ShaderUniformModel;
 import DeCell.FPG.Reflection.InputEventAPICreator;
+import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.input.InputEventAPI;
 import com.fs.starfarer.api.ui.*;
 import com.fs.starfarer.combat.entities.Ship;
@@ -57,6 +59,11 @@ public class MainRefitPanelPlugin extends PanelPlugin {
 
             uniformsPanel = new MyPanel.Builder(300, 600).setPlugin(
                     new RenderableHandlerPlugin()
+                            .addBelow(new BorderRenderable(Global.getSettings().getSprite("fpg", "border2"))
+                                    .setSlices(32) // TODO: make a static final for this border as its used in multiple places
+                                    .setThickness(8)
+                                    .setPadding(-8).setRenderInside(true)
+                            )
             ).build(_parent).inRMid(20);
             c.addToInternalData("uniformsPanel", uniformsPanel);
 
@@ -81,19 +88,11 @@ public class MainRefitPanelPlugin extends PanelPlugin {
         ShaderJsonModel curr = FancyPhaseGlow.getShaderForShip(currShip);
         if (curr != null)
             cb.setIndex(FancyPhaseGlow.PhaseShaders.indexOf(curr));
-
-
-//                    new ColorPickerV2Dialogue().popup(
-//                            new MyButton.Builder("Open Color Picker", 190, 25, panel).build(),
-//                            _UIElements,
-//                            (s -> s.<MyButton>getFromInternal("debug_btn").setText(s.getColor().toString())),
-//                            pair("debug_btn", debugButton)
-//                    );
     }
 
     @Override
-    public void init(CustomPanelAPI _p) {
-        MyPanel parent = new MyPanel(_p).addTo(UIElements).setIgnoreEvents(true);
+    public void init(UIContainer<?, CustomPanelAPI> _p) {
+        MyPanel parent = new MyPanel(_p.u).addTo(UIElements).setIgnoreEvents(true);
         Rect zaza = parent.rect();
 
         MyPanel refitWindowOpenerButtonPanel = new MyPanel.Builder(190, 25).build(parent).inBL(606, 40);

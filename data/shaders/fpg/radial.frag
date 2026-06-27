@@ -24,13 +24,21 @@ void main()
 
     angle += time * speed;
 
-    float colorIndex = mod(angle * float(armCount) / (3.14159 * 2.0), float(numColors));
+    // Calculate color indices matching your original radial logic
+    float colorIndex = mod(angle * float(armCount) / (3.14159265359 * 2.0), float(numColors));
+    
+    // Ensure negative angles handle mod smoothly
+    if (colorIndex < 0.0) colorIndex += float(numColors);
+
     int idx1 = int(floor(colorIndex));
     int idx2 = idx1 + 1;
     if (idx2 >= numColors) idx2 = 0;
     float frac = fract(colorIndex);
 
+    // Blend the colors
     vec3 spiralColor = mix(colors[idx1], colors[idx2], frac);
+    
+    // Darken towards the edges
     spiralColor *= (1.0 - radius * 0.6);
 
     vec3 finalRGB = spiralColor;

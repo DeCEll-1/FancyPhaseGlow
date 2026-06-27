@@ -82,27 +82,8 @@ public class NoPhaseGlow extends BaseHullMod {
 
                     shaderData.updateUniformValues(ship, this);
 
-                    Color[] colorData = Arrays.asList(
-                            new Color(0, 255, 255),
-                            new Color(255, 0, 255),
-                            new Color(255, 255, 0)
-                    ).toArray(Color[]::new);
-
                     int texID = this.getTexture().ö00000();
-//                    float t = Global.getCombatEngine().getTotalElapsedTime(false);
                     float t = ship.getFullTimeDeployed();
-                    // ShipAPI haves total time deployed, use that instead when you get to using per-ship shaders
-
-                    shader.getUniformManager()
-                            .setTexture("textureSampler", texID, GL13.GL_TEXTURE0)
-                            .setFloat("time", t)  // seconds!
-                            .setInt("armCount", 9)
-                            .setFloat("speed", 0.25f)
-//                            .setFloat("thickness", 0.28f)
-                            .setColor3Array("colors", colorData)
-                            .setInt("numColors", colorData.length)
-                            .setFloat("texWidth", this.texWidth)
-                            .setFloat("texHeight", this.texHeight);
                 }
 
 
@@ -113,11 +94,20 @@ public class NoPhaseGlow extends BaseHullMod {
 
                 GL11.glPushMatrix();
 
+//                GL11.glColor4ub(
+//                        (byte) this.color.getRed(),
+//                        (byte) this.color.getGreen(),
+//                        (byte) this.color.getBlue(),
+//                        (byte) ((int) ((float) this.color.getAlpha() * this.getAlphaMult()))
+//                );
+
                 GL11.glColor4ub(
-                        (byte) this.color.getRed(),
-                        (byte) this.color.getGreen(),
-                        (byte) this.color.getBlue(),
-                        (byte) ((int) ((float) this.color.getAlpha() * this.getAlphaMult()))
+                        (byte) 0xFF,
+                        (byte) 0xFF,
+                        (byte) 0xFF,
+                        (byte) ((int) ((float) this.color.getAlpha() * this.getAlphaMult() *
+                                ((Number) FancyPhaseGlow.getShipProperty(ship, ShaderJsonModel.phaseAlphaMultKeyword)).floatValue()
+                        ))
                 );
 
                 float centerX = this.getCenterX();
@@ -169,7 +159,8 @@ public class NoPhaseGlow extends BaseHullMod {
                 }
             }
         };
-//        sprt.setColor(Color.white);
+//        float val = ((Number) FancyPhaseGlow.getShipProperty(ship, ShaderJsonModel.phaseAlphaMultKeyword)).floatValue();
+//        sprt.setAlphaMult(val); // does not function as the game uses alpha mult for coils
         return sprt;
     }
 

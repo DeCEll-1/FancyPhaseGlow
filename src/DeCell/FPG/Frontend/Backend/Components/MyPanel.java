@@ -59,7 +59,7 @@ public class MyPanel extends UIContainer<MyPanel, CustomPanelAPI> {
 
     public MyPanel initPlugin() {
         if (plugin != null)
-            plugin.init(this.u);
+            plugin.init(this);
         return this;
     }
 
@@ -94,7 +94,7 @@ public class MyPanel extends UIContainer<MyPanel, CustomPanelAPI> {
     @Override
     public MyPanel update() {
         if (plugin != null)
-            plugin.update(u);
+            plugin.update(this);
         return this;
     }
 

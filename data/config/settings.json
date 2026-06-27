@@ -1,6 +1,6 @@
 {
     "fpg_debug": true,
-    "fpg_debug_ui": true,
+    "fpg_debug_ui": false,
     "fpg_debug_ui_highlight_charlie": false,
     "plugins": {
         "refit_screen_thingamajig" : "DeCell.FPG.Plugins.CustomBanel"
