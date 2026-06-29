@@ -1,6 +1,7 @@
 ### TODOs
 | Filename | line # | TODO |
 |:------|:------:|:------|
+| [src/DeCell/CPG/CustomizablePhaseGlow.java](src/DeCell/CPG/CustomizablePhaseGlow.java#L17) | 17 | allow like 20% for the enemy ships to have the fancy glows with random colors |
 | [src/DeCell/CPG/Frontend/MainRefitPanelPlugin.java](src/DeCell/CPG/Frontend/MainRefitPanelPlugin.java#L37) | 37 | implement a preview section here |
 | [src/DeCell/CPG/Hullmods/NoPhaseGlow.java](src/DeCell/CPG/Hullmods/NoPhaseGlow.java#L82) | 82 | figure out *some* way to fix this lambda variable bs that java haves |
 | [src/DeCell/CPG/JavaSlop/ShaderJsonParsing/ShaderUniformModel.java](src/DeCell/CPG/JavaSlop/ShaderJsonParsing/ShaderUniformModel.java#L357) | 357 | implement custom textures |
